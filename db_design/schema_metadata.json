@@ -1,0 +1,116 @@
+{
+  "schema_name": "road_insight",
+  "description": "Normalized PostgreSQL database for the ROAD INSIGHT AI-Powered Indian Road Accident Analysis & Natural Language Analytics System.",
+  "tables": [
+    {
+      "table": "data_sources",
+      "description": "Tracks every source CSV file loaded into the database for data provenance.",
+      "columns": {
+        "source_id": { "type": "SMALLINT", "description": "Primary key for the source file." },
+        "source_file": { "type": "VARCHAR(255)", "description": "Name of the original source file (e.g., 'RoadNoAcc.csv')." },
+        "report_year": { "type": "SMALLINT", "description": "Publication year of the MoRTH report." }
+      },
+      "primary_key": ["source_id"]
+    },
+    {
+      "table": "states",
+      "description": "Reference table for Indian States and Union Territories.",
+      "columns": {
+        "state_id": { "type": "SMALLINT", "description": "Surrogate primary key." },
+        "state_name": { "type": "VARCHAR(100)", "description": "Name of the state or union territory.", "synonyms": ["state", "region"] },
+        "state_type": { "type": "VARCHAR(30)", "description": "'State' or 'Union Territory'." }
+      },
+      "primary_key": ["state_id"]
+    },
+    {
+      "table": "cities",
+      "description": "Reference table for 50 large Indian cities.",
+      "columns": {
+        "city_id": { "type": "SMALLINT", "description": "Surrogate primary key." },
+        "city_name": { "type": "VARCHAR(100)", "description": "Name of the city.", "synonyms": ["city", "urban area"] },
+        "state_id": { "type": "SMALLINT", "description": "Foreign key to the states table." }
+      },
+      "primary_key": ["city_id"],
+      "foreign_keys": [
+        { "column": "state_id", "references": "states(state_id)" }
+      ]
+    },
+    {
+      "table": "national_historical_stats",
+      "description": "Historical national road accident statistics from 1970 to 2019.",
+      "columns": {
+        "year": { "type": "SMALLINT", "description": "Calendar year.", "synonyms": ["annual"] },
+        "total_accidents": { "type": "INTEGER", "description": "Total road accidents in India.", "synonyms": ["crashes", "accidents"] },
+        "total_killed": { "type": "INTEGER", "description": "Total fatalities in India.", "synonyms": ["deaths", "fatalities", "killed"] },
+        "total_injured": { "type": "INTEGER", "description": "Total persons injured in India.", "synonyms": ["injured", "hurt"] },
+        "population_thousands": { "type": "NUMERIC(12,3)", "description": "Population of India in thousands." },
+        "accidents_per_lakh_pop": { "type": "NUMERIC(12,6)", "description": "Accident rate per 100,000 (lakh) population." }
+      },
+      "primary_key": ["stat_id"]
+    },
+    {
+      "table": "national_annual_stats",
+      "description": "Recent national road accident statistics for 2019-2023.",
+      "columns": {
+        "year": { "type": "SMALLINT", "description": "Calendar year." },
+        "total_accidents": { "type": "INTEGER", "description": "Total accidents." },
+        "total_fatalities": { "type": "INTEGER", "description": "Total fatalities." },
+        "accidents_pct_change": { "type": "NUMERIC(6,2)", "description": "Year-over-year percentage change in accidents." }
+      },
+      "primary_key": ["stat_id"]
+    },
+    {
+      "table": "state_annual_stats",
+      "description": "State/UT level road accident statistics for 2019-2023.",
+      "columns": {
+        "state_id": { "type": "SMALLINT", "description": "Foreign key to states table." },
+        "year": { "type": "SMALLINT", "description": "Calendar year." },
+        "accident_count": { "type": "INTEGER", "description": "Total accidents in the state for the year." },
+        "persons_killed": { "type": "INTEGER", "description": "Total fatalities in the state for the year." }
+      },
+      "primary_key": ["stat_id"],
+      "foreign_keys": [
+        { "column": "state_id", "references": "states(state_id)" }
+      ]
+    },
+    {
+      "table": "city_accident_stats",
+      "description": "City-level road accident statistics for 50 large cities (2022-2023).",
+      "columns": {
+        "city_id": { "type": "SMALLINT", "description": "Foreign key to cities table." },
+        "year": { "type": "SMALLINT", "description": "Calendar year." },
+        "accident_count": { "type": "INTEGER", "description": "Total accidents in the city for the year." },
+        "persons_killed": { "type": "INTEGER", "description": "Total fatalities in the city for the year." }
+      },
+      "primary_key": ["stat_id"],
+      "foreign_keys": [
+        { "column": "city_id", "references": "cities(city_id)" }
+      ]
+    },
+    {
+      "table": "collision_type_stats",
+      "description": "National accident statistics by collision type (2022-2023).",
+      "columns": {
+        "collision_type_id": { "type": "SMALLINT", "description": "Foreign key to collision_types table." },
+        "year": { "type": "SMALLINT", "description": "Calendar year." },
+        "accident_count": { "type": "INTEGER", "description": "Total accidents for this collision type." }
+      }
+    },
+    {
+      "table": "violation_type_stats",
+      "description": "National accident statistics by traffic violation cause (2022-2023).",
+      "columns": {
+        "violation_type_id": { "type": "SMALLINT", "description": "Foreign key to violation_types table." },
+        "year": { "type": "SMALLINT", "description": "Calendar year." },
+        "accident_count": { "type": "INTEGER", "description": "Total accidents caused by this violation." }
+      }
+    }
+  ],
+  "allowed_joins": [
+    "state_annual_stats.state_id = states.state_id",
+    "cities.state_id = states.state_id",
+    "city_accident_stats.city_id = cities.city_id",
+    "collision_type_stats.collision_type_id = collision_types.collision_type_id",
+    "violation_type_stats.violation_type_id = violation_types.violation_type_id"
+  ]
+}
