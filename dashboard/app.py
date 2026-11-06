@@ -10,6 +10,16 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from sqlalchemy import create_engine, text
 import warnings
+import sys
+import os
+
+# Ensure project root is in sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+try:
+    from dashboard.ai_analyst_tab import render_ai_analyst_page
+except ImportError:
+    from ai_analyst_tab import render_ai_analyst_page
+
 warnings.filterwarnings("ignore")
 
 # ─────────────────────────────────────────────
@@ -86,6 +96,57 @@ div[data-testid="stExpander"] {
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid rgba(99, 179, 237, 0.15); border-radius: 12px;
 }
+
+/* Tabs Styling */
+button[data-baseweb="tab"] {
+    color: #94a3b8 !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    background: transparent !important;
+    padding: 8px 18px !important;
+    border-radius: 8px 8px 0 0 !important;
+    transition: all 0.2s ease !important;
+}
+button[data-baseweb="tab"]:hover {
+    color: #63b3ed !important;
+    background: rgba(99, 179, 237, 0.08) !important;
+}
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #38bdf8 !important;
+    border-bottom: 2px solid #38bdf8 !important;
+    background: rgba(56, 189, 248, 0.12) !important;
+}
+div[data-baseweb="tab-highlight"] {
+    background-color: #38bdf8 !important;
+}
+div[data-baseweb="tab-list"] {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(99, 179, 237, 0.2) !important;
+    gap: 8px !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Selectbox & Inputs */
+div[data-testid="stSelectbox"] label {
+    color: #cbd5e1 !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+}
+div[data-testid="stSelectbox"] > div > div {
+    background-color: #111827 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(99, 179, 237, 0.3) !important;
+    border-radius: 8px !important;
+}
+div[data-testid="stSelectbox"] svg {
+    fill: #63b3ed !important;
+}
+
+/* Header bar */
+header[data-testid="stHeader"] {
+    background: rgba(10, 14, 26, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,11 +163,12 @@ def styled_fig(fig):
         paper_bgcolor=PAPER_BG,
         plot_bgcolor=PAPER_BG,
         font=dict(family="Inter", color="#e2e8f0"),
-        margin=dict(l=20, r=20, t=40, b=20),
-        legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(99,179,237,0.2)", borderwidth=1),
+        title_font=dict(family="Inter", color="#e2e8f0", size=15),
+        margin=dict(l=20, r=20, t=50, b=20),
+        legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(99,179,237,0.2)", borderwidth=1, font=dict(color="#e2e8f0")),
     )
-    fig.update_xaxes(gridcolor=GRID_COLOR, zeroline=False)
-    fig.update_yaxes(gridcolor=GRID_COLOR, zeroline=False)
+    fig.update_xaxes(gridcolor=GRID_COLOR, zeroline=False, tickfont=dict(color="#cbd5e1"))
+    fig.update_yaxes(gridcolor=GRID_COLOR, zeroline=False, tickfont=dict(color="#cbd5e1"))
     return fig
 
 # ─────────────────────────────────────────────
@@ -139,7 +201,8 @@ with st.sidebar:
     page = st.radio(
         "Navigate",
         ["🏠 Overview", "📈 National Trends", "🗺️ State Analysis",
-         "🏙️ City Rankings", "💥 Collision & Violations", "🌧️ Weather & Road Features"],
+         "🏙️ City Rankings", "💥 Collision & Violations", "🌧️ Weather & Road Features",
+         "🤖 AI Analyst"],
         label_visibility="collapsed"
     )
 
@@ -541,13 +604,14 @@ elif page == "🌧️ Weather & Road Features":
     with tab1:
         col1, col2 = st.columns(2)
         with col1:
+            max_w_acc = float(weather["total_accidents"].max()) if not weather.empty else 100
             fig = px.bar(weather, x="weather_condition_name", y="total_accidents",
                          title="Total Accidents by Weather Condition (2019)",
                          color="avg_fatality_rate", color_continuous_scale="RdYlGn_r",
                          text=weather["total_accidents"].apply(lambda x: f"{x:,}"),
                          labels={"weather_condition_name":"","total_accidents":"Accidents","avg_fatality_rate":"Fatality Rate %"})
             fig.update_traces(textposition="outside")
-            fig.update_layout(height=400, xaxis_tickangle=-15)
+            fig.update_layout(height=400, xaxis_tickangle=-15, yaxis=dict(range=[0, max_w_acc * 1.15]))
             st.plotly_chart(styled_fig(fig), use_container_width=True)
         with col2:
             fig2 = px.pie(weather, values="total_accidents", names="weather_condition_name",
@@ -556,25 +620,29 @@ elif page == "🌧️ Weather & Road Features":
             fig2.update_layout(height=400)
             st.plotly_chart(styled_fig(fig2), use_container_width=True)
 
+        max_w_fat = float(weather["avg_fatality_rate"].max()) if not weather.empty else 10
         fig3 = go.Figure(go.Bar(
             x=weather["weather_condition_name"], y=weather["avg_fatality_rate"],
             marker_color=["#f59e0b","#f87171","#94a3b8","#63b3ed","#34d399"],
             text=[f"{v}%" for v in weather["avg_fatality_rate"]], textposition="outside"
         ))
         fig3.update_layout(title="Average Fatality Rate % by Weather",
-                           xaxis_title="", yaxis_title="Fatality Rate (%)", height=340)
+                           xaxis_title="", yaxis_title="Fatality Rate (%)", height=340,
+                           yaxis=dict(range=[0, max_w_fat * 1.25]))
         st.plotly_chart(styled_fig(fig3), use_container_width=True)
         st.info("☀️ **Key Insight**: Sunny/Clear weather has the MOST accidents — drivers are more reckless in good conditions. Hail/Sleet has the highest fatality rate despite far fewer accidents.")
 
     with tab2:
         col1, col2 = st.columns(2)
         with col1:
+            max_road_acc = float(roads["total_accidents"].max()) if not roads.empty else 100
             fig4 = px.bar(roads, x="total_accidents", y="road_feature_name", orientation="h",
                           title="Accidents by Road Feature (2019)",
                           color="avg_fatality_rate", color_continuous_scale="YlOrRd",
                           text=roads["total_accidents"].apply(lambda x: f"{x:,}"))
             fig4.update_traces(textposition="outside")
             fig4.update_layout(height=440, yaxis=dict(autorange="reversed"),
+                               xaxis=dict(range=[0, max_road_acc * 1.25]),
                                xaxis_title="Accidents", yaxis_title="")
             st.plotly_chart(styled_fig(fig4), use_container_width=True)
         with col2:
@@ -583,29 +651,59 @@ elif page == "🌧️ Weather & Road Features":
                               hover_name="road_feature_name",
                               color_discrete_sequence=COLOR_QUAL,
                               title="Road Feature Risk — Accidents vs Deaths")
-            fig5.update_layout(height=440, showlegend=True)
+            fig5.update_layout(height=440, showlegend=True,
+                               legend=dict(font=dict(color="#e2e8f0"), title_font_color="#e2e8f0"))
             st.plotly_chart(styled_fig(fig5), use_container_width=True)
         st.warning("🛣️ **Key Insight**: Straight roads account for ~60% of all accidents — speed and overconfidence on open roads is the #1 risk factor, not road complexity.")
 
     with tab3:
         all_cities = query(engine, "SELECT DISTINCT city_name FROM vw_city_weather_summary ORDER BY city_name")
-        city_sel = st.selectbox("Select City", all_cities["city_name"].tolist())
+        city_sel = st.selectbox("Select City for Infrastructure & Weather Breakdown", all_cities["city_name"].tolist())
 
         w_city = query(engine, f"SELECT weather_condition_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct FROM vw_city_weather_summary WHERE city_name='{city_sel}' ORDER BY accident_count DESC")
         r_city = query(engine, f"SELECT road_feature_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct FROM vw_city_road_feature_summary WHERE city_name='{city_sel}' ORDER BY accident_count DESC")
 
+        # Summary KPIs for selected city
+        tot_c_acc = int(w_city["accident_count"].sum()) if not w_city.empty else 0
+        tot_c_kill = int(w_city["persons_killed"].sum()) if not w_city.empty else 0
+        tot_c_inj = int(w_city["persons_total_injured"].sum()) if not w_city.empty else 0
+        c_fat_rate = round(tot_c_kill / tot_c_acc * 100, 2) if tot_c_acc > 0 else 0
+
+        c_col1, c_col2, c_col3, c_col4 = st.columns(4)
+        with c_col1:
+            st.metric(f"🚗 {city_sel} Accidents", f"{tot_c_acc:,}")
+        with c_col2:
+            st.metric("💀 Fatalities", f"{tot_c_kill:,}")
+        with c_col3:
+            st.metric("🏥 Injured", f"{tot_c_inj:,}")
+        with c_col4:
+            st.metric("⚠️ Fatality Rate", f"{c_fat_rate}%")
+
+        st.markdown("<br>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(f"**🌤️ Weather Impact — {city_sel}**")
+            st.markdown(f'<div class="section-header">🌤️ Weather Impact — {city_sel}</div>', unsafe_allow_html=True)
+            max_wc = float(w_city["accident_count"].max()) if not w_city.empty else 50
             fig6 = px.bar(w_city, x="weather_condition_name", y="accident_count",
                           color="fatality_rate_pct", color_continuous_scale="RdYlGn_r",
-                          text=w_city["accident_count"], labels={"weather_condition_name":"","accident_count":"Accidents"})
-            fig6.update_layout(height=340, xaxis_tickangle=-20)
+                          text=w_city["accident_count"].apply(lambda x: f"{x:,}"),
+                          labels={"weather_condition_name":"","accident_count":"Accidents","fatality_rate_pct":"Fatality %"})
+            fig6.update_traces(textposition="outside")
+            fig6.update_layout(height=360, xaxis_tickangle=-20, yaxis=dict(range=[0, max_wc * 1.25]))
             st.plotly_chart(styled_fig(fig6), use_container_width=True)
         with col2:
-            st.markdown(f"**🛣️ Road Features — {city_sel}**")
+            st.markdown(f'<div class="section-header">🛣️ Road Features — {city_sel}</div>', unsafe_allow_html=True)
+            max_rc = float(r_city["accident_count"].max()) if not r_city.empty else 50
             fig7 = px.bar(r_city, x="road_feature_name", y="accident_count",
                           color="fatality_rate_pct", color_continuous_scale="RdYlGn_r",
-                          text=r_city["accident_count"], labels={"road_feature_name":"","accident_count":"Accidents"})
-            fig7.update_layout(height=340, xaxis_tickangle=-30)
+                          text=r_city["accident_count"].apply(lambda x: f"{x:,}"),
+                          labels={"road_feature_name":"","accident_count":"Accidents","fatality_rate_pct":"Fatality %"})
+            fig7.update_traces(textposition="outside")
+            fig7.update_layout(height=360, xaxis_tickangle=-30, yaxis=dict(range=[0, max_rc * 1.25]))
             st.plotly_chart(styled_fig(fig7), use_container_width=True)
+
+# ══════════════════════════════════════════════
+# PAGE 7 — AI ANALYST
+# ══════════════════════════════════════════════
+elif page == "🤖 AI Analyst":
+    render_ai_analyst_page()
