@@ -198,6 +198,11 @@ def get_engine():
             "DATABASE_URL or READONLY_DATABASE_URL is not configured. "
             "Add it to Streamlit Cloud secrets and use a hosted PostgreSQL database."
         )
+    if "localhost" in database_url or "127.0.0.1" in database_url:
+        raise RuntimeError(
+            "The database URL points to localhost. Streamlit Cloud cannot access "
+            "your local PostgreSQL server; replace it with the Neon connection URL."
+        )
     if database_url.startswith("postgres://"):
         database_url = "postgresql+psycopg://" + database_url[len("postgres://"):]
     elif database_url.startswith("postgresql://"):

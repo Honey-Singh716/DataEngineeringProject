@@ -47,6 +47,10 @@ READONLY_DATABASE_URL = "postgresql+psycopg://readonly_user:YOUR_PASSWORD@YOUR_H
 GROQ_API_KEY = "your_groq_api_key"
 ```
 
+For Neon, copy the **connection string** from the Neon dashboard and use it
+as `READONLY_DATABASE_URL` (it normally ends with `?sslmode=require`). Do not
+use `localhost` or the URL from your local `.env` file.
+
 The app uses the `psycopg` driver, which is compatible with the Python runtime
 used by Streamlit Community Cloud. Redeploy after committing `requirements.txt`.
 
