@@ -69,6 +69,10 @@ def get_readonly_engine() -> Engine:
         )
 
     url = settings.readonly_database_url
+    if url.startswith("postgres://"):
+        url = "postgresql+psycopg://" + url[len("postgres://"):]
+    elif url.startswith("postgresql://"):
+        url = "postgresql+psycopg://" + url[len("postgresql://"):]
     # Mask credentials in log output
     masked = url.split("@")[-1] if "@" in url else url
     logger.info("Creating read-only engine → ...@%s", masked)
@@ -118,4 +122,3 @@ def check_readonly_connection() -> dict:
         return {"ok": False, "db_name": None, "db_user": None, "message": str(exc)}
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "db_name": None, "db_user": None, "message": f"Connection failed: {exc}"}
-

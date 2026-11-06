@@ -36,6 +36,20 @@ streamlit run dashboard/app.py
 ```
 Access the dashboard at http://localhost:8501
 
+### Deploy to Streamlit Community Cloud
+
+Streamlit Community Cloud cannot connect to PostgreSQL running on your local
+computer. Use a hosted PostgreSQL database, then add these secrets in
+**Manage app -> Settings -> Secrets**:
+
+```toml
+READONLY_DATABASE_URL = "postgresql+psycopg://readonly_user:YOUR_PASSWORD@YOUR_HOST:5432/roadinsight"
+GROQ_API_KEY = "your_groq_api_key"
+```
+
+The app uses the `psycopg` driver, which is compatible with the Python runtime
+used by Streamlit Community Cloud. Redeploy after committing `requirements.txt`.
+
 ## 📂 Project Structure
 
 ```

@@ -15,6 +15,22 @@ import os
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
+def _load_streamlit_secrets() -> None:
+    """Expose Cloud secrets to configuration loaded by the AI Analyst."""
+    for name in ("READONLY_DATABASE_URL", "GROQ_API_KEY", "GROQ_MODEL", "GROQ_TIMEOUT"):
+        if os.getenv(name):
+            continue
+        try:
+            value = st.secrets.get(name)
+        except (FileNotFoundError, KeyError):
+            value = None
+        if value is not None:
+            os.environ[name] = str(value)
+
+
+_load_streamlit_secrets()
 try:
     from dashboard.ai_analyst_tab import render_ai_analyst_page
 except ImportError:
@@ -176,8 +192,18 @@ def styled_fig(fig):
 # ─────────────────────────────────────────────
 @st.cache_resource
 def get_engine():
+    database_url = os.getenv("DATABASE_URL") or os.getenv("READONLY_DATABASE_URL")
+    if not database_url:
+        raise RuntimeError(
+            "DATABASE_URL or READONLY_DATABASE_URL is not configured. "
+            "Add it to Streamlit Cloud secrets and use a hosted PostgreSQL database."
+        )
+    if database_url.startswith("postgres://"):
+        database_url = "postgresql+psycopg://" + database_url[len("postgres://"):]
+    elif database_url.startswith("postgresql://"):
+        database_url = "postgresql+psycopg://" + database_url[len("postgresql://"):]
     return create_engine(
-        "postgresql://postgres:b24cm1030@localhost:5432/roadinsight",
+        database_url,
         connect_args={"options": "-csearch_path=road_insight,public"}
     )
 
