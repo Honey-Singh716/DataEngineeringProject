@@ -2,7 +2,7 @@
 dashboard/ai_analyst_tab.py
 Streamlit UI component for the Road Insight AI Analyst.
 Provides a chat interface, suggested questions, SQL transparency expander,
-interactive Plotly visualizations, CSV download, and domain-grounded explanations.
+interactive Plotly visualizations, and domain-grounded explanations.
 """
 from __future__ import annotations
 
