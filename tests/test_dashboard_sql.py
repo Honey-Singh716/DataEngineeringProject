@@ -75,8 +75,9 @@ def test_dashboard_queries_executable_under_dashboard_role():
     dash_url = (
         os.getenv("DASHBOARD_DATABASE_URL")
         or os.getenv("DATABASE_URL")
-        or "postgresql://roadinsight_dashboard:DashPass123!Safe@localhost:5432/roadinsight"
     )
+    if not dash_url:
+        pytest.skip("DASHBOARD_DATABASE_URL or DATABASE_URL not set in environment")
     
     try:
         engine = create_engine(dash_url)
