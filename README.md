@@ -124,8 +124,14 @@ roadinsight-india/
 - **Vehicle Analysis**: Vehicle categories involved in accidents
 - **Severity Analysis**: Killed vs injured ratios and risk factors
 
-## 📚 Documentation
+## 📚 Documentation & Verification Evidence
 
+- **[Master Evidence & Audit Report](docs/EVIDENCE_REPORT.md)**: Consolidated empirical findings, benchmark results, and verification metrics.
+- **[Feedback Traceability Matrix](docs/FEEDBACK_TRACEABILITY.md)**: Direct mapping from evaluator feedback to concrete technical implementations.
+- **[Metric Dictionary](docs/METRIC_DICTIONARY.md)**: Mathematical formulations, denominators, units, and edge cases for all 17 system metrics.
+- **[Data Quality Rules](docs/DATA_QUALITY_RULES.md)**: Zero vs NULL semantics (Daman & Diu merger), decimal rejection, and normalization specs.
+- **[Bottleneck Benchmark Summary](docs/evidence/benchmarks/BOTTLENECK_SUMMARY.md)**: Empirical benchmarks across ingestion, B-tree scans, pipeline latencies, and concurrency.
+- **[Test Suite Summary](docs/evidence/tests/test_summary.md)**: Automated pytest suites, secret scanning, and manual test records.
 - **[BUSINESS_GLOSSARY.md](db_design/BUSINESS_GLOSSARY.md)**: Defines business terms and KPIs
 - **[DATA_DICTIONARY.md](db_design/DATA_DICTIONARY.md)**: Complete schema documentation
 - **[ERD.md](db_design/ERD.md)**: Entity-Relationship Diagram of the database
@@ -134,14 +140,23 @@ roadinsight-india/
 - **[NORMALIZATION_REPORT.md](db_design/NORMALIZATION_REPORT.md)**: Database normalization details
 - **[schema_metadata.json](db_design/schema_metadata.json)**: Automated metadata
 
+## ⚠️ Evidence & Known Dataset Limitations
+
+1. **Source Discrepancy in MoRTH Annexure 45 (`RA2019_A45.csv`)**:
+   - In the official published report, 161 of 250 city weather records exhibit non-additive injury sums (`Total Injured != Grievously Injured + Minor Injured`). In compliance with raw government data audit guidelines, official figures are preserved verbatim rather than synthetically adjusted.
+2. **2020 UT Merger Dynamics (Dadra & Nagar Haveli and Daman & Diu)**:
+   - Daman & Diu reports `0` accidents in 2022 and `NULL` in 2023 due to consolidated reporting under Dadra & Nagar Haveli. Explicit 0 counts are preserved distinct from NULL (unreported) to avoid statistical skew.
+3. **Decennial Census Projections**:
+   - Rates requiring population denominators (e.g. accidents per lakh population) use official Registrar General of India projections up to 2019 and are not extrapolated post-2019 due to the postponement of the 2021 Census.
+
 ## 🛠️ Tech Stack
 
-- **Language**: Python 3.x
-- **Database**: PostgreSQL 12+
-- **Data Processing**: pandas, NumPy
-- **ETL**: Custom Python scripts
-- **Visualization**: Plotly, Dash
-- **Frontend**: Streamlit
+- **Language**: Python 3.13
+- **Database**: PostgreSQL 17
+- **Data Processing**: pandas, NumPy, SQLAlchemy 2
+- **Validation**: AST parsing (sqlglot), Custom DQ Framework
+- **Visualization & UI**: Streamlit, Plotly
+- **LLM Engine**: Groq API (openai/gpt-oss-120b) with strict AST SQL validation
 
 ## 🤝 Contributing
 
