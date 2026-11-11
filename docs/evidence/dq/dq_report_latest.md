@@ -1,6 +1,6 @@
 # RoadInsight India — Data Quality & Reconciliation Audit Report
 
-**Generated:** 2026-11-11 17:37:39 UTC  
+**Generated:** 2026-11-11 17:43:26 UTC  
 **Run ID:** `In-Memory / Dry-Run`  
 **Total Checks:** 14 | **Passed:** 13 | **Warnings:** 1 | **Failures:** 0
 
