@@ -1,0 +1,66 @@
+# =======================================================================
+# ROAD INSIGHT — Primary + Streaming Replica Multi-Node Cluster
+# File: docker-compose.replica.yml
+# Demonstrates physical streaming replication between primary and read-replica
+# =======================================================================
+
+version: '3.8'
+
+services:
+  # Primary Database Node (Read / Write)
+  postgres_primary:
+    image: postgres:17-alpine
+    container_name: roadinsight_primary
+    restart: always
+    environment:
+      POSTGRES_DB: roadinsight
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    command: |
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=10
+      -c max_replication_slots=10
+      -c hot_standby=on
+    ports:
+      - "5432:5432"
+    volumes:
+      - primary_data:/var/lib/postgresql/data
+      - ./db_design/sql:/docker-entrypoint-initdb.d:ro
+    networks:
+      - roadinsight_net
+
+  # Read-Only Standby Replica Node
+  postgres_replica:
+    image: postgres:17-alpine
+    container_name: roadinsight_replica
+    restart: always
+    depends_on:
+      - postgres_primary
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    command: |
+      bash -c "
+      until pg_isready -h postgres_primary -p 5432; do echo 'Waiting for primary...'; sleep 1; done;
+      if [ ! -s /var/lib/postgresql/data/PG_VERSION ]; then
+        pg_basebackup -h postgres_primary -D /var/lib/postgresql/data -U postgres -Fp -Xs -R;
+      fi;
+      exec postgres -c hot_standby=on
+      "
+    ports:
+      - "5433:5432"
+    volumes:
+      - replica_data:/var/lib/postgresql/data
+    networks:
+      - roadinsight_net
+
+volumes:
+  primary_data:
+  replica_data:
+
+networks:
+  roadinsight_net:
+    driver: bridge
