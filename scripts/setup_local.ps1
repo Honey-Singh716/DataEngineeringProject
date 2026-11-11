@@ -106,6 +106,17 @@ try {
         Run-Psql -File $roScript -Variables @{ ro_password = $roPass }
     }
 
+    $dashScript = Join-Path $ProjectRoot "scripts\setup_dashboard_role.sql"
+    if (Test-Path $dashScript) {
+        $dashPass = $env:DASHBOARD_PASSWORD
+        if ([string]::IsNullOrWhiteSpace($dashPass)) {
+            $secDashPass = Read-Host -Prompt "Enter password for roadinsight_dashboard role" -AsSecureString
+            $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secDashPass)
+            $dashPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+        }
+        Run-Psql -File $dashScript -Variables @{ dash_password = $dashPass }
+    }
+
     Write-Host "`n[6/7] Validating row counts and integrity (07_validation_queries.sql)..." -ForegroundColor Yellow
     $valScript = Join-Path $ProjectRoot "db_design\sql\07_validation_queries.sql"
     Run-Psql -File $valScript

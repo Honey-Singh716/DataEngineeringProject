@@ -192,17 +192,35 @@ def styled_fig(fig):
 # ─────────────────────────────────────────────
 @st.cache_resource
 def get_engine():
-    database_url = os.getenv("DATABASE_URL") or os.getenv("READONLY_DATABASE_URL")
+    # Priority: DASHBOARD_DATABASE_URL -> DATABASE_URL -> READONLY_DATABASE_URL
+    database_url = (
+        os.getenv("DASHBOARD_DATABASE_URL")
+        or os.getenv("DATABASE_URL")
+        or os.getenv("READONLY_DATABASE_URL")
+    )
     if not database_url:
         raise RuntimeError(
-            "DATABASE_URL or READONLY_DATABASE_URL is not configured. "
-            "Add it to Streamlit Cloud secrets and use a hosted PostgreSQL database."
+            "DATABASE_URL, DASHBOARD_DATABASE_URL, or READONLY_DATABASE_URL is not configured. "
+            "Please configure database credentials in .env or Streamlit Cloud secrets."
         )
+
+    # Localhost check: log warning instead of hard failure
     if "localhost" in database_url or "127.0.0.1" in database_url:
-        raise RuntimeError(
-            "The database URL points to localhost. Streamlit Cloud cannot access "
-            "your local PostgreSQL server; replace it with the Neon connection URL."
+        warnings.warn("Database URL points to localhost (local environment active).")
+
+    # Visible warning if falling back to restricted read-only role
+    is_fallback = (
+        not os.getenv("DASHBOARD_DATABASE_URL")
+        and not os.getenv("DATABASE_URL")
+        and bool(os.getenv("READONLY_DATABASE_URL"))
+    )
+    if is_fallback:
+        st.warning(
+            "⚠️ Connected via restricted read-only role (`roadinsight_readonly`). "
+            "Detailed views (State/City overview) may be unavailable. "
+            "Configure `DASHBOARD_DATABASE_URL` with `roadinsight_dashboard` for full dashboard access."
         )
+
     if database_url.startswith("postgres://"):
         database_url = "postgresql+psycopg://" + database_url[len("postgres://"):]
     elif database_url.startswith("postgresql://"):
@@ -213,9 +231,9 @@ def get_engine():
     )
 
 @st.cache_data(ttl=300)
-def query(_engine, sql: str) -> pd.DataFrame:
+def query(_engine, sql: str, params: dict | None = None) -> pd.DataFrame:
     with _engine.connect() as conn:
-        return pd.read_sql(text(sql), conn)
+        return pd.read_sql(text(sql), conn, params=params)
 
 # ─────────────────────────────────────────────
 # SIDEBAR NAVIGATION
@@ -245,7 +263,7 @@ with st.sidebar:
     2019 – 2023 · 10 CSV datasets<br>
     50 cities · 37 states/UTs<br><br>
     <b style='color:#64748b;'>Schema</b><br>
-    PostgreSQL · 3NF · 13 tables<br>
+    PostgreSQL · 3NF · 16 analytical tables<br>
     9 analytical views
     </div>
     """, unsafe_allow_html=True)
@@ -408,11 +426,11 @@ elif page == "🗺️ State Analysis":
     st.markdown('<div class="hero-banner"><div class="hero-title">🗺️ State Analysis</div><div class="hero-sub">Accident and fatality breakdown across all Indian States & Union Territories (2019–2023)</div></div>', unsafe_allow_html=True)
 
     year_sel = st.select_slider("Select Year", options=[2019,2020,2021,2022,2023], value=2023)
-    states = query(engine, f"""
+    states = query(engine, """
         SELECT state_name, state_type, accident_count, persons_killed, accident_rank, killed_rank
-        FROM vw_state_stats_full WHERE year={year_sel} AND accident_count IS NOT NULL
+        FROM vw_state_stats_full WHERE year = :year AND accident_count IS NOT NULL
         ORDER BY accident_count DESC
-    """)
+    """, {"year": int(year_sel)})
 
     c1, c2, c3, c4 = st.columns(4)
     with c1: st.metric("States with Data", len(states))
@@ -472,11 +490,11 @@ elif page == "🏙️ City Rankings":
     st.markdown('<div class="hero-banner"><div class="hero-title">🏙️ City Rankings</div><div class="hero-sub">Road safety profile for 50 major Indian cities (2022–2023)</div></div>', unsafe_allow_html=True)
 
     year_c = st.radio("Year", [2022, 2023], horizontal=True, index=1)
-    cities = query(engine, f"""
+    cities = query(engine, """
         SELECT city_name, state_name, accident_count, persons_killed, persons_injured,
                accident_rank, killed_rank, injured_rank
-        FROM vw_city_stats_full WHERE year={year_c} ORDER BY accident_count DESC
-    """)
+        FROM vw_city_stats_full WHERE year = :year ORDER BY accident_count DESC
+    """, {"year": int(year_c)})
 
     c1, c2, c3 = st.columns(3)
     with c1: st.metric("Cities Covered", len(cities))
@@ -534,7 +552,12 @@ elif page == "🏙️ City Rankings":
             fr = round(row["persons_killed"]/row["accident_count"]*100,1) if row["accident_count"]>0 else 0
             st.metric("Fatality Rate", f"{fr}%")
 
-        vio = query(engine, f"SELECT violation_type_name, accident_count FROM vw_city_violation_summary WHERE city_name='{city_sel}' AND year=2023 ORDER BY accident_count DESC")
+        vio = query(engine, """
+            SELECT violation_type_name, accident_count 
+            FROM vw_city_violation_summary 
+            WHERE city_name = :city AND year = :year 
+            ORDER BY accident_count DESC
+        """, {"city": str(city_sel), "year": 2023})
         if not vio.empty:
             fig4 = px.pie(vio, values="accident_count", names="violation_type_name",
                           title=f"Traffic Violations — {city_sel} (2023)",
@@ -691,8 +714,18 @@ elif page == "🌧️ Weather & Road Features":
         all_cities = query(engine, "SELECT DISTINCT city_name FROM vw_city_weather_summary ORDER BY city_name")
         city_sel = st.selectbox("Select City for Infrastructure & Weather Breakdown", all_cities["city_name"].tolist())
 
-        w_city = query(engine, f"SELECT weather_condition_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct FROM vw_city_weather_summary WHERE city_name='{city_sel}' ORDER BY accident_count DESC")
-        r_city = query(engine, f"SELECT road_feature_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct FROM vw_city_road_feature_summary WHERE city_name='{city_sel}' ORDER BY accident_count DESC")
+        w_city = query(engine, """
+            SELECT weather_condition_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct 
+            FROM vw_city_weather_summary 
+            WHERE city_name = :city 
+            ORDER BY accident_count DESC
+        """, {"city": str(city_sel)})
+        r_city = query(engine, """
+            SELECT road_feature_name, accident_count, persons_killed, persons_total_injured, fatality_rate_pct 
+            FROM vw_city_road_feature_summary 
+            WHERE city_name = :city 
+            ORDER BY accident_count DESC
+        """, {"city": str(city_sel)})
 
         # Summary KPIs for selected city
         tot_c_acc = int(w_city["accident_count"].sum()) if not w_city.empty else 0

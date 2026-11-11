@@ -17,14 +17,14 @@ Key security controls include:
 > [!WARNING]
 > **Historical Password Exposure & Rotation Notice**
 > 
-> Prior commits in the git history of this repository (such as early demonstration commits) contained hardcoded default credentials (specifically `ReadOnlyPass123!Safe`).
+> Prior commits in the git history of this repository (such as early demonstration commits) contained hardcoded default credentials (specifically `ReadOnlyPass***`).
 >
 > In accordance with academic project guidelines, **git history has intentionally NOT been rewritten** to maintain commit reproducibility and grading integrity.
 >
 > **Action Required for Deployment / Production:**
-> 1. Any live or production deployment of this database **MUST manually rotate the password** for `roadinsight_readonly` and `postgres`.
+> 1. Any live or production deployment of this database **MUST manually rotate the password** for `roadinsight_readonly`, `roadinsight_dashboard`, and `postgres`.
 > 2. The old password must not be reused under any circumstances.
-> 3. Use the updated setup script `scripts/setup_readonly_role.sql` which requires supplying a fresh password via `-v ro_password="<secure_password>"`.
+> 3. Use the updated setup scripts `scripts/setup_readonly_role.sql` and `scripts/setup_dashboard_role.sql` which require supplying a fresh password via `-v ro_password="<secure_password>"` and `-v dash_password="<secure_password>"`.
 
 ---
 
@@ -37,13 +37,15 @@ Key security controls include:
    ```
 2. Set unique, strong passwords in `.env`:
    ```ini
-   GROQ_API_KEY=gsk_your_actual_key_here
+   GROQ_API_KEY=your_groq_api_key_here
    GROQ_MODEL=openai/gpt-oss-120b
-   READONLY_DATABASE_URL=postgresql://roadinsight_readonly:YOUR_ROTATED_PASSWORD@localhost:5432/roadinsight
+   DASHBOARD_DATABASE_URL=postgresql+psycopg://roadinsight_dashboard:<password>@localhost:5432/roadinsight
+   READONLY_DATABASE_URL=postgresql+psycopg://roadinsight_readonly:<password>@localhost:5432/roadinsight
    ```
 3. Run role setup with the rotated password:
    ```bash
-   psql -U postgres -d roadinsight -v ro_password="YOUR_ROTATED_PASSWORD" -f scripts/setup_readonly_role.sql
+   psql -U postgres -d roadinsight -v ro_password="<password>" -f scripts/setup_readonly_role.sql
+   psql -U postgres -d roadinsight -v dash_password="<password>" -f scripts/setup_dashboard_role.sql
    ```
 
 ### Streamlit Community Cloud
@@ -51,7 +53,8 @@ Add your configuration in **Manage app -> Settings -> Secrets** in TOML format:
 ```toml
 GROQ_API_KEY = "gsk_..."
 GROQ_MODEL = "openai/gpt-oss-120b"
-READONLY_DATABASE_URL = "postgresql+psycopg://roadinsight_readonly:YOUR_ROTATED_PASSWORD@YOUR_HOST:5432/roadinsight"
+DASHBOARD_DATABASE_URL = "postgresql+psycopg://roadinsight_dashboard:<password>@YOUR_HOST:5432/roadinsight"
+READONLY_DATABASE_URL = "postgresql+psycopg://roadinsight_readonly:<password>@YOUR_HOST:5432/roadinsight"
 QUERY_TIMEOUT_SECONDS = 3
 MAX_RESULT_ROWS = 100
 ```
@@ -64,3 +67,4 @@ A regression test is included in the test suite to continuously verify that no p
 ```bash
 pytest tests/test_no_secrets.py -v
 ```
+

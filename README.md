@@ -69,18 +69,23 @@ Access the dashboard at http://localhost:8501
 
 ### Deploy to Streamlit Community Cloud
 
-Streamlit Community Cloud cannot connect to PostgreSQL running on your local
-computer. Use a hosted PostgreSQL database, then add these secrets in
-**Manage app -> Settings -> Secrets**:
+Streamlit Community Cloud runs in a remote container and cannot connect to `localhost`.
+Use a hosted PostgreSQL database (e.g., Neon, Supabase, Render), then configure secrets in
+**Manage app -> Settings -> Secrets** in TOML format:
 
 ```toml
-READONLY_DATABASE_URL = "postgresql+psycopg://readonly_user:YOUR_PASSWORD@YOUR_HOST:5432/roadinsight"
-GROQ_API_KEY = "your_groq_api_key"
-```
+# Dashboard connection (with access to analytical views)
+DASHBOARD_DATABASE_URL = "postgresql+psycopg://roadinsight_dashboard:YOUR_PASSWORD@YOUR_HOST:5432/roadinsight?sslmode=require"
 
-For Neon, copy the **connection string** from the Neon dashboard and use it
-as `READONLY_DATABASE_URL` (it normally ends with `?sslmode=require`). Do not
-use `localhost` or the URL from your local `.env` file.
+# AI Analyst connection (isolated read-only execution)
+READONLY_DATABASE_URL = "postgresql+psycopg://roadinsight_readonly:YOUR_PASSWORD@YOUR_HOST:5432/roadinsight?sslmode=require"
+
+# Groq LLM API
+GROQ_API_KEY = "your_groq_api_key"
+GROQ_MODEL = "openai/gpt-oss-120b"
+QUERY_TIMEOUT_SECONDS = 3
+MAX_RESULT_ROWS = 100
+```
 
 The app uses the `psycopg` driver, which is compatible with the Python runtime
 used by Streamlit Community Cloud. Redeploy after committing `requirements.txt`.

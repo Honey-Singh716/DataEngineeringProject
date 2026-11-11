@@ -20,18 +20,23 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 
 def check_b2() -> tuple[bool, str]:
-    """B2: connect as roadinsight_readonly and SELECT from vw_state_stats_full and vw_city_stats_full."""
-    url = os.getenv("READONLY_DATABASE_URL")
-    if not url:
-        return False, "READONLY_DATABASE_URL not set in .env"
+    """B2: dashboard role access to full views (vw_state_stats_full and vw_city_stats_full)."""
+    # Follow dashboard engine resolution order: DASHBOARD_DATABASE_URL -> DATABASE_URL -> READONLY_DATABASE_URL
+    dash_url = (
+        os.getenv("DASHBOARD_DATABASE_URL")
+        or os.getenv("DATABASE_URL")
+        or os.getenv("READONLY_DATABASE_URL")
+    )
+    if not dash_url:
+        return False, "No database URL configured for dashboard in .env"
     
     try:
-        engine = create_engine(url)
+        engine = create_engine(dash_url)
         with engine.connect() as conn:
-            # Try SELECT from vw_state_stats_full
+            # Try SELECT from vw_state_stats_full and vw_city_stats_full
             conn.execute(text("SELECT * FROM road_insight.vw_state_stats_full LIMIT 1"))
             conn.execute(text("SELECT * FROM road_insight.vw_city_stats_full LIMIT 1"))
-        return False, "No permission error; roadinsight_readonly was able to SELECT from views (bug absent/fixed)"
+        return False, "Dashboard connection successfully executed SELECT from views under roadinsight_dashboard (bug absent/fixed)"
     except Exception as e:
         err_msg = str(e)
         if "permission denied" in err_msg.lower() or "insufficientprivilege" in err_msg.lower():
@@ -45,15 +50,20 @@ def check_b3() -> tuple[bool, str]:
     if not app_py.exists():
         return False, "dashboard/app.py not found"
     
-    content = app_py.read_text(encoding="utf-8")
-    # Check if the code explicitly checks for localhost and raises RuntimeError
-    has_localhost_raise = (
-        'if "localhost" in database_url or "127.0.0.1" in database_url:' in content
-        and "raise RuntimeError" in content
-    )
-    if has_localhost_raise:
-        return True, "get_engine() explicitly raises RuntimeError when localhost or 127.0.0.1 is present"
-    return False, "get_engine() does not raise RuntimeError on localhost URLs (bug absent/fixed)"
+    tree = ast.parse(app_py.read_text(encoding="utf-8"))
+    get_engine_fn = next((n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "get_engine"), None)
+    if not get_engine_fn:
+        return False, "get_engine() function not found in app.py"
+    
+    # Inspect AST: check if an If node checking localhost raises an exception
+    for node in ast.walk(get_engine_fn):
+        if isinstance(node, ast.If):
+            test_src = ast.unparse(node.test)
+            if "localhost" in test_src or "127.0.0.1" in test_src:
+                for sub in ast.walk(node):
+                    if isinstance(sub, ast.Raise):
+                        return True, "get_engine() explicitly raises RuntimeError when localhost or 127.0.0.1 is present"
+    return False, "get_engine() does not raise on localhost URLs (bug absent/fixed)"
 
 
 def check_b5() -> tuple[bool, str]:
