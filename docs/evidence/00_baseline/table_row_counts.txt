@@ -1,0 +1,29 @@
+==========================================================================
+  ROAD INSIGHT: Table Row Counts & Relation Sizes Baseline               
+==========================================================================
+Table Name                       Type          Row Count         Size
+--------------------------------------------------------------------------
+cities                           BASE TABLE           50      72.0 KB
+city_accident_stats              BASE TABLE          100     120.0 KB
+city_road_feature_stats          BASE TABLE          400     152.0 KB
+city_violation_stats             BASE TABLE          300     144.0 KB
+city_weather_stats               BASE TABLE          250     144.0 KB
+collision_type_stats             BASE TABLE           18      72.0 KB
+collision_types                  BASE TABLE            9      48.0 KB
+data_sources                     BASE TABLE           10      32.0 KB
+national_annual_stats            BASE TABLE            5      56.0 KB
+national_historical_stats        BASE TABLE           29      56.0 KB
+road_features                    BASE TABLE            8      48.0 KB
+state_annual_stats               BASE TABLE          185     168.0 KB
+states                           BASE TABLE           37      64.0 KB
+stg_large_cities                 BASE TABLE            0      16.0 KB
+stg_large_cities_vio             BASE TABLE            0      16.0 KB
+stg_road_no_acc                  BASE TABLE            0      16.0 KB
+stg_road_state_acc               BASE TABLE            0      16.0 KB
+stg_road_state_killed            BASE TABLE            0      16.0 KB
+violation_type_stats             BASE TABLE           12      72.0 KB
+violation_types                  BASE TABLE            6      48.0 KB
+weather_conditions               BASE TABLE            5      48.0 KB
+--------------------------------------------------------------------------
+Total Base Tables: 21
+Total Rows Stored: 1,424

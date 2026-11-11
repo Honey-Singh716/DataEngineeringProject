@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest-cov>=5.0.0
+matplotlib>=3.9.0
+psutil>=6.0.0

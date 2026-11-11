@@ -1,0 +1,44 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.13, pytest-9.1.1, pluggy-1.7.0 -- C:\Users\honey\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\honey\OneDrive\Desktop\DE(Project)
+plugins: anyio-4.13.0, cov-7.1.0
+collecting ... collected 34 items
+
+tests/test_backend.py::test_groq_response_parsing_valid PASSED           [  2%]
+tests/test_backend.py::test_successful_sql_generation PASSED             [  5%]
+tests/test_backend.py::test_unsupported_question_handling PASSED         [  8%]
+tests/test_backend.py::test_invalid_json_response_handling PASSED        [ 11%]
+tests/test_backend.py::test_multiple_sql_statements_rejected PASSED      [ 14%]
+tests/test_backend.py::test_insert_rejected PASSED                       [ 17%]
+tests/test_backend.py::test_delete_rejected PASSED                       [ 20%]
+tests/test_backend.py::test_drop_rejected PASSED                         [ 23%]
+tests/test_backend.py::test_unauthorized_table_rejected PASSED           [ 26%]
+tests/test_backend.py::test_staging_table_rejected PASSED                [ 29%]
+tests/test_backend.py::test_unauthorized_schema_rejected PASSED          [ 32%]
+tests/test_backend.py::test_dangerous_function_rejected PASSED           [ 35%]
+tests/test_backend.py::test_valid_cte_allowed PASSED                     [ 38%]
+tests/test_backend.py::test_data_modifying_cte_rejected PASSED           [ 41%]
+tests/test_backend.py::test_subquery_with_unauthorized_table_rejected PASSED [ 44%]
+tests/test_backend.py::test_missing_limit_enforced PASSED                [ 47%]
+tests/test_backend.py::test_empty_query_results_handled PASSED           [ 50%]
+tests/test_backend.py::test_database_connection_failure_handled PASSED   [ 52%]
+tests/test_backend.py::test_query_timeout_handled PASSED                 [ 55%]
+tests/test_backend.py::test_readonly_transaction_enforcement_event PASSED [ 58%]
+tests/test_backend.py::test_complete_text_to_sql_workflow PASSED         [ 61%]
+tests/test_milestone2.py::test_db_role_identity PASSED                   [ 64%]
+tests/test_milestone2.py::test_db_transaction_read_only PASSED           [ 67%]
+tests/test_milestone2.py::test_db_select_approved_tables PASSED          [ 70%]
+tests/test_milestone2.py::test_db_select_approved_7_views PASSED         [ 73%]
+tests/test_milestone2.py::test_db_staging_tables_denied PASSED           [ 76%]
+tests/test_milestone2.py::test_db_data_sources_denied PASSED             [ 79%]
+tests/test_milestone2.py::test_db_dml_statements_denied PASSED           [ 82%]
+tests/test_milestone2.py::test_chart_generator_bar PASSED                [ 85%]
+tests/test_milestone2.py::test_chart_generator_line PASSED               [ 88%]
+tests/test_milestone2.py::test_chart_generator_pie PASSED                [ 91%]
+tests/test_milestone2.py::test_chart_generator_empty_or_single_column PASSED [ 94%]
+tests/test_milestone2.py::test_suggested_questions_validity PASSED       [ 97%]
+tests/test_milestone2.py::test_live_text_to_sql_execution PASSED         [100%]
+
+============================= 34 passed in 6.96s ==============================
+

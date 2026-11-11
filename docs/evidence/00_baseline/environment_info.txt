@@ -1,0 +1,13 @@
+==================================================
+  ROAD INSIGHT: Hardware & Environment Baseline   
+==================================================
+Operating System      : Windows 11 (10.0.26200)
+Architecture          : AMD64
+CPU Cores (Logical)   : 12
+CPU Processor         : Intel64 Family 6 Model 186 Stepping 3, GenuineIntel
+System RAM (Total)    : 7.71 GB
+System RAM (Avail)    : 0.71 GB
+Python Version        : 3.13.13
+PostgreSQL Version    : PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+PG shared_buffers     : 128MB
+PG max_connections    : 100

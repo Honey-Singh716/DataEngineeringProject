@@ -1,0 +1,15 @@
+{
+  "os": "Windows 11 (10.0.26200)",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+  "cpu_count_logical": 12,
+  "cpu_freq_mhz": 1300.0,
+  "ram_total_gb": 7.71,
+  "ram_available_gb": 0.71,
+  "python_version": "3.13.13",
+  "python_executable": "C:\\Users\\honey\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "postgresql_version": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "postgresql_shared_buffers": "128MB",
+  "postgresql_max_connections": "100"
+}

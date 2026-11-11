@@ -1,0 +1,76 @@
+==========================================================================================================
+  ROAD INSIGHT: pg_indexes Listing & Relation Sizes (pg_relation_size) Baseline                           
+==========================================================================================================
+Table Name                 Index Name                         Unique  PK          Size
+------------------------------------------------------------------------------------------
+cities                     cities_pkey                        True    True       16 kB
+cities                     idx_cities_name_lower              False   False      16 kB
+cities                     idx_cities_state_id                False   False      16 kB
+cities                     uq_cities_name                     True    False      16 kB
+city_accident_stats        city_accident_stats_pkey           True    True       16 kB
+city_accident_stats        idx_city_acc_accident_count_desc   False   False      16 kB
+city_accident_stats        idx_city_acc_city_id               False   False      16 kB
+city_accident_stats        idx_city_acc_city_year             False   False      16 kB
+city_accident_stats        idx_city_acc_killed_desc           False   False      16 kB
+city_accident_stats        idx_city_acc_year                  False   False      16 kB
+city_accident_stats        uq_city_acc_year                   True    False      16 kB
+city_road_feature_stats    city_road_feature_stats_pkey       True    True       16 kB
+city_road_feature_stats    idx_city_rf_city_id                False   False      16 kB
+city_road_feature_stats    idx_city_rf_feat_id                False   False      16 kB
+city_road_feature_stats    idx_city_rf_year                   False   False      16 kB
+city_road_feature_stats    idx_city_rf_year_feat              False   False      16 kB
+city_road_feature_stats    uq_city_road_feat                  True    False      16 kB
+city_violation_stats       city_violation_stats_pkey          True    True       16 kB
+city_violation_stats       idx_city_vio_city_id               False   False      16 kB
+city_violation_stats       idx_city_vio_city_year_type        False   False      16 kB
+city_violation_stats       idx_city_vio_type_id               False   False      16 kB
+city_violation_stats       idx_city_vio_year                  False   False      16 kB
+city_violation_stats       uq_city_vio_year_type              True    False      16 kB
+city_weather_stats         city_weather_stats_pkey            True    True       16 kB
+city_weather_stats         idx_city_wea_city_id               False   False      16 kB
+city_weather_stats         idx_city_wea_cond_id               False   False      16 kB
+city_weather_stats         idx_city_wea_year                  False   False      16 kB
+city_weather_stats         idx_city_wea_year_cond             False   False      16 kB
+city_weather_stats         uq_city_weather                    True    False      16 kB
+collision_type_stats       collision_type_stats_pkey          True    True       16 kB
+collision_type_stats       idx_coll_type_id                   False   False      16 kB
+collision_type_stats       idx_coll_year                      False   False      16 kB
+collision_type_stats       uq_coll_type_year                  True    False      16 kB
+collision_types            collision_types_collision_type_name_key True    False      16 kB
+collision_types            collision_types_pkey               True    True       16 kB
+data_sources               data_sources_pkey                  True    True       16 kB
+national_annual_stats      idx_nat_ann_year                   False   False      16 kB
+national_annual_stats      national_annual_stats_pkey         True    True       16 kB
+national_annual_stats      uq_nat_ann_year                    True    False      16 kB
+national_historical_stats  idx_nat_hist_year                  False   False      16 kB
+national_historical_stats  national_historical_stats_pkey     True    True       16 kB
+national_historical_stats  uq_nat_hist_year                   True    False      16 kB
+road_features              road_features_pkey                 True    True       16 kB
+road_features              road_features_road_feature_name_key True    False      16 kB
+state_annual_stats         idx_state_acc_count_desc           False   False      16 kB
+state_annual_stats         idx_state_killed_desc              False   False      16 kB
+state_annual_stats         idx_state_stats_source_id          False   False      16 kB
+state_annual_stats         idx_state_stats_state_id           False   False      16 kB
+state_annual_stats         idx_state_stats_state_year         False   False      16 kB
+state_annual_stats         idx_state_stats_year               False   False      16 kB
+state_annual_stats         state_annual_stats_pkey            True    True       16 kB
+state_annual_stats         uq_state_year                      True    False      16 kB
+states                     idx_states_name_lower              False   False      16 kB
+states                     states_pkey                        True    True       16 kB
+states                     uq_states_name                     True    False      16 kB
+stg_large_cities           stg_large_cities_pkey              True    True  8192 bytes
+stg_large_cities_vio       stg_large_cities_vio_pkey          True    True  8192 bytes
+stg_road_no_acc            stg_road_no_acc_pkey               True    True  8192 bytes
+stg_road_state_acc         stg_road_state_acc_pkey            True    True  8192 bytes
+stg_road_state_killed      stg_road_state_killed_pkey         True    True  8192 bytes
+violation_type_stats       idx_viol_type_id                   False   False      16 kB
+violation_type_stats       idx_viol_year                      False   False      16 kB
+violation_type_stats       uq_viol_type_year                  True    False      16 kB
+violation_type_stats       violation_type_stats_pkey          True    True       16 kB
+violation_types            violation_types_pkey               True    True       16 kB
+violation_types            violation_types_violation_type_name_key True    False      16 kB
+weather_conditions         weather_conditions_pkey            True    True       16 kB
+weather_conditions         weather_conditions_weather_condition_name_key True    False      16 kB
+------------------------------------------------------------------------------------------
+Total Indexes: 68
+Total Index Size: 1048.0 KB

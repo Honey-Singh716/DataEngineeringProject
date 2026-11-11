@@ -1,0 +1,22 @@
+table_name,table_type,row_count,size_bytes,size_pretty
+cities,BASE TABLE,50,73728,72.0 KB
+city_accident_stats,BASE TABLE,100,122880,120.0 KB
+city_road_feature_stats,BASE TABLE,400,155648,152.0 KB
+city_violation_stats,BASE TABLE,300,147456,144.0 KB
+city_weather_stats,BASE TABLE,250,147456,144.0 KB
+collision_type_stats,BASE TABLE,18,73728,72.0 KB
+collision_types,BASE TABLE,9,49152,48.0 KB
+data_sources,BASE TABLE,10,32768,32.0 KB
+national_annual_stats,BASE TABLE,5,57344,56.0 KB
+national_historical_stats,BASE TABLE,29,57344,56.0 KB
+road_features,BASE TABLE,8,49152,48.0 KB
+state_annual_stats,BASE TABLE,185,172032,168.0 KB
+states,BASE TABLE,37,65536,64.0 KB
+stg_large_cities,BASE TABLE,0,16384,16.0 KB
+stg_large_cities_vio,BASE TABLE,0,16384,16.0 KB
+stg_road_no_acc,BASE TABLE,0,16384,16.0 KB
+stg_road_state_acc,BASE TABLE,0,16384,16.0 KB
+stg_road_state_killed,BASE TABLE,0,16384,16.0 KB
+violation_type_stats,BASE TABLE,12,73728,72.0 KB
+violation_types,BASE TABLE,6,49152,48.0 KB
+weather_conditions,BASE TABLE,5,49152,48.0 KB

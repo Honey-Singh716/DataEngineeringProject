@@ -24,6 +24,37 @@ psql -U postgres -f db_design/sql/04_create_indexes.sql
 psql -U postgres -f db_design/sql/05_insert_reference_data.sql
 ```
 
+## 💻 Local Setup (Windows)
+
+### Option A: Docker Path (Recommended for clean environment)
+1. Ensure Docker Desktop is running on Windows.
+2. Start the PostgreSQL 17 container:
+   ```powershell
+   docker compose up -d
+   ```
+3. Initialize the schema, ETL, views, and roles automatically using PowerShell:
+   ```powershell
+   .\scripts\setup_local.ps1 -Host "localhost" -Port 5432 -Database "roadinsight" -User "postgres"
+   ```
+
+### Option B: Non-Docker Path (Local PostgreSQL 17 Install)
+1. Ensure PostgreSQL 17 service is active locally (port 5432).
+2. Execute the setup script or run the sequential SQL migrations and ETL loader:
+   ```powershell
+   # Automated setup via PowerShell:
+   .\scripts\setup_local.ps1
+
+   # Or manual step-by-step:
+   psql -U postgres -f db_design/sql/01_create_schema.sql
+   psql -U postgres -d roadinsight -f db_design/sql/02_create_tables.sql
+   psql -U postgres -d roadinsight -f db_design/sql/03_create_constraints.sql
+   psql -U postgres -d roadinsight -f db_design/sql/04_create_indexes.sql
+   psql -U postgres -d roadinsight -f db_design/sql/05_insert_reference_data.sql
+   python db_design/06_etl_loader.py --conn "postgresql://postgres:<password>@localhost:5432/roadinsight"
+   psql -U postgres -d roadinsight -f db_design/sql/08_views.sql
+   ```
+
+
 ### Load Data
 Run the ETL loader to populate the database:
 ```bash

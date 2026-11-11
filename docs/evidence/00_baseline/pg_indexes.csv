@@ -1,0 +1,69 @@
+table_name,index_name,is_unique,is_primary,size_bytes,size_pretty,index_definition
+cities,cities_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX cities_pkey ON road_insight.cities USING btree (city_id)
+cities,idx_cities_name_lower,False,False,16384,16 kB,CREATE INDEX idx_cities_name_lower ON road_insight.cities USING btree (lower((city_name)::text))
+cities,idx_cities_state_id,False,False,16384,16 kB,CREATE INDEX idx_cities_state_id ON road_insight.cities USING btree (state_id)
+cities,uq_cities_name,True,False,16384,16 kB,CREATE UNIQUE INDEX uq_cities_name ON road_insight.cities USING btree (city_name)
+city_accident_stats,city_accident_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX city_accident_stats_pkey ON road_insight.city_accident_stats USING btree (stat_id)
+city_accident_stats,idx_city_acc_accident_count_desc,False,False,16384,16 kB,CREATE INDEX idx_city_acc_accident_count_desc ON road_insight.city_accident_stats USING btree (accident_count DESC NULLS LAST)
+city_accident_stats,idx_city_acc_city_id,False,False,16384,16 kB,CREATE INDEX idx_city_acc_city_id ON road_insight.city_accident_stats USING btree (city_id)
+city_accident_stats,idx_city_acc_city_year,False,False,16384,16 kB,"CREATE INDEX idx_city_acc_city_year ON road_insight.city_accident_stats USING btree (city_id, year)"
+city_accident_stats,idx_city_acc_killed_desc,False,False,16384,16 kB,CREATE INDEX idx_city_acc_killed_desc ON road_insight.city_accident_stats USING btree (persons_killed DESC NULLS LAST)
+city_accident_stats,idx_city_acc_year,False,False,16384,16 kB,CREATE INDEX idx_city_acc_year ON road_insight.city_accident_stats USING btree (year)
+city_accident_stats,uq_city_acc_year,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_city_acc_year ON road_insight.city_accident_stats USING btree (city_id, year)"
+city_road_feature_stats,city_road_feature_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX city_road_feature_stats_pkey ON road_insight.city_road_feature_stats USING btree (stat_id)
+city_road_feature_stats,idx_city_rf_city_id,False,False,16384,16 kB,CREATE INDEX idx_city_rf_city_id ON road_insight.city_road_feature_stats USING btree (city_id)
+city_road_feature_stats,idx_city_rf_feat_id,False,False,16384,16 kB,CREATE INDEX idx_city_rf_feat_id ON road_insight.city_road_feature_stats USING btree (road_feature_id)
+city_road_feature_stats,idx_city_rf_year,False,False,16384,16 kB,CREATE INDEX idx_city_rf_year ON road_insight.city_road_feature_stats USING btree (year)
+city_road_feature_stats,idx_city_rf_year_feat,False,False,16384,16 kB,"CREATE INDEX idx_city_rf_year_feat ON road_insight.city_road_feature_stats USING btree (year, road_feature_id)"
+city_road_feature_stats,uq_city_road_feat,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_city_road_feat ON road_insight.city_road_feature_stats USING btree (city_id, year, road_feature_id)"
+city_violation_stats,city_violation_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX city_violation_stats_pkey ON road_insight.city_violation_stats USING btree (stat_id)
+city_violation_stats,idx_city_vio_city_id,False,False,16384,16 kB,CREATE INDEX idx_city_vio_city_id ON road_insight.city_violation_stats USING btree (city_id)
+city_violation_stats,idx_city_vio_city_year_type,False,False,16384,16 kB,"CREATE INDEX idx_city_vio_city_year_type ON road_insight.city_violation_stats USING btree (city_id, year, violation_type_id)"
+city_violation_stats,idx_city_vio_type_id,False,False,16384,16 kB,CREATE INDEX idx_city_vio_type_id ON road_insight.city_violation_stats USING btree (violation_type_id)
+city_violation_stats,idx_city_vio_year,False,False,16384,16 kB,CREATE INDEX idx_city_vio_year ON road_insight.city_violation_stats USING btree (year)
+city_violation_stats,uq_city_vio_year_type,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_city_vio_year_type ON road_insight.city_violation_stats USING btree (city_id, year, violation_type_id)"
+city_weather_stats,city_weather_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX city_weather_stats_pkey ON road_insight.city_weather_stats USING btree (stat_id)
+city_weather_stats,idx_city_wea_city_id,False,False,16384,16 kB,CREATE INDEX idx_city_wea_city_id ON road_insight.city_weather_stats USING btree (city_id)
+city_weather_stats,idx_city_wea_cond_id,False,False,16384,16 kB,CREATE INDEX idx_city_wea_cond_id ON road_insight.city_weather_stats USING btree (weather_condition_id)
+city_weather_stats,idx_city_wea_year,False,False,16384,16 kB,CREATE INDEX idx_city_wea_year ON road_insight.city_weather_stats USING btree (year)
+city_weather_stats,idx_city_wea_year_cond,False,False,16384,16 kB,"CREATE INDEX idx_city_wea_year_cond ON road_insight.city_weather_stats USING btree (year, weather_condition_id)"
+city_weather_stats,uq_city_weather,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_city_weather ON road_insight.city_weather_stats USING btree (city_id, year, weather_condition_id)"
+collision_type_stats,collision_type_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX collision_type_stats_pkey ON road_insight.collision_type_stats USING btree (stat_id)
+collision_type_stats,idx_coll_type_id,False,False,16384,16 kB,CREATE INDEX idx_coll_type_id ON road_insight.collision_type_stats USING btree (collision_type_id)
+collision_type_stats,idx_coll_year,False,False,16384,16 kB,CREATE INDEX idx_coll_year ON road_insight.collision_type_stats USING btree (year)
+collision_type_stats,uq_coll_type_year,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_coll_type_year ON road_insight.collision_type_stats USING btree (collision_type_id, year)"
+collision_types,collision_types_collision_type_name_key,True,False,16384,16 kB,CREATE UNIQUE INDEX collision_types_collision_type_name_key ON road_insight.collision_types USING btree (collision_type_name)
+collision_types,collision_types_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX collision_types_pkey ON road_insight.collision_types USING btree (collision_type_id)
+data_sources,data_sources_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX data_sources_pkey ON road_insight.data_sources USING btree (source_id)
+national_annual_stats,idx_nat_ann_year,False,False,16384,16 kB,CREATE INDEX idx_nat_ann_year ON road_insight.national_annual_stats USING btree (year)
+national_annual_stats,national_annual_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX national_annual_stats_pkey ON road_insight.national_annual_stats USING btree (stat_id)
+national_annual_stats,uq_nat_ann_year,True,False,16384,16 kB,CREATE UNIQUE INDEX uq_nat_ann_year ON road_insight.national_annual_stats USING btree (year)
+national_historical_stats,idx_nat_hist_year,False,False,16384,16 kB,CREATE INDEX idx_nat_hist_year ON road_insight.national_historical_stats USING btree (year)
+national_historical_stats,national_historical_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX national_historical_stats_pkey ON road_insight.national_historical_stats USING btree (stat_id)
+national_historical_stats,uq_nat_hist_year,True,False,16384,16 kB,CREATE UNIQUE INDEX uq_nat_hist_year ON road_insight.national_historical_stats USING btree (year)
+road_features,road_features_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX road_features_pkey ON road_insight.road_features USING btree (road_feature_id)
+road_features,road_features_road_feature_name_key,True,False,16384,16 kB,CREATE UNIQUE INDEX road_features_road_feature_name_key ON road_insight.road_features USING btree (road_feature_name)
+state_annual_stats,idx_state_acc_count_desc,False,False,16384,16 kB,CREATE INDEX idx_state_acc_count_desc ON road_insight.state_annual_stats USING btree (accident_count DESC NULLS LAST)
+state_annual_stats,idx_state_killed_desc,False,False,16384,16 kB,CREATE INDEX idx_state_killed_desc ON road_insight.state_annual_stats USING btree (persons_killed DESC NULLS LAST)
+state_annual_stats,idx_state_stats_source_id,False,False,16384,16 kB,CREATE INDEX idx_state_stats_source_id ON road_insight.state_annual_stats USING btree (source_id)
+state_annual_stats,idx_state_stats_state_id,False,False,16384,16 kB,CREATE INDEX idx_state_stats_state_id ON road_insight.state_annual_stats USING btree (state_id)
+state_annual_stats,idx_state_stats_state_year,False,False,16384,16 kB,"CREATE INDEX idx_state_stats_state_year ON road_insight.state_annual_stats USING btree (state_id, year)"
+state_annual_stats,idx_state_stats_year,False,False,16384,16 kB,CREATE INDEX idx_state_stats_year ON road_insight.state_annual_stats USING btree (year)
+state_annual_stats,state_annual_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX state_annual_stats_pkey ON road_insight.state_annual_stats USING btree (stat_id)
+state_annual_stats,uq_state_year,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_state_year ON road_insight.state_annual_stats USING btree (state_id, year)"
+states,idx_states_name_lower,False,False,16384,16 kB,CREATE INDEX idx_states_name_lower ON road_insight.states USING btree (lower((state_name)::text))
+states,states_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX states_pkey ON road_insight.states USING btree (state_id)
+states,uq_states_name,True,False,16384,16 kB,CREATE UNIQUE INDEX uq_states_name ON road_insight.states USING btree (state_name)
+stg_large_cities,stg_large_cities_pkey,True,True,8192,8192 bytes,CREATE UNIQUE INDEX stg_large_cities_pkey ON road_insight.stg_large_cities USING btree (stg_id)
+stg_large_cities_vio,stg_large_cities_vio_pkey,True,True,8192,8192 bytes,CREATE UNIQUE INDEX stg_large_cities_vio_pkey ON road_insight.stg_large_cities_vio USING btree (stg_id)
+stg_road_no_acc,stg_road_no_acc_pkey,True,True,8192,8192 bytes,CREATE UNIQUE INDEX stg_road_no_acc_pkey ON road_insight.stg_road_no_acc USING btree (stg_id)
+stg_road_state_acc,stg_road_state_acc_pkey,True,True,8192,8192 bytes,CREATE UNIQUE INDEX stg_road_state_acc_pkey ON road_insight.stg_road_state_acc USING btree (stg_id)
+stg_road_state_killed,stg_road_state_killed_pkey,True,True,8192,8192 bytes,CREATE UNIQUE INDEX stg_road_state_killed_pkey ON road_insight.stg_road_state_killed USING btree (stg_id)
+violation_type_stats,idx_viol_type_id,False,False,16384,16 kB,CREATE INDEX idx_viol_type_id ON road_insight.violation_type_stats USING btree (violation_type_id)
+violation_type_stats,idx_viol_year,False,False,16384,16 kB,CREATE INDEX idx_viol_year ON road_insight.violation_type_stats USING btree (year)
+violation_type_stats,uq_viol_type_year,True,False,16384,16 kB,"CREATE UNIQUE INDEX uq_viol_type_year ON road_insight.violation_type_stats USING btree (violation_type_id, year)"
+violation_type_stats,violation_type_stats_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX violation_type_stats_pkey ON road_insight.violation_type_stats USING btree (stat_id)
+violation_types,violation_types_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX violation_types_pkey ON road_insight.violation_types USING btree (violation_type_id)
+violation_types,violation_types_violation_type_name_key,True,False,16384,16 kB,CREATE UNIQUE INDEX violation_types_violation_type_name_key ON road_insight.violation_types USING btree (violation_type_name)
+weather_conditions,weather_conditions_pkey,True,True,16384,16 kB,CREATE UNIQUE INDEX weather_conditions_pkey ON road_insight.weather_conditions USING btree (weather_condition_id)
+weather_conditions,weather_conditions_weather_condition_name_key,True,False,16384,16 kB,CREATE UNIQUE INDEX weather_conditions_weather_condition_name_key ON road_insight.weather_conditions USING btree (weather_condition_name)

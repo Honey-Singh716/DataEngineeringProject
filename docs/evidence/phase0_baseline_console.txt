@@ -1,0 +1,75 @@
+﻿======================================================================
+  ROAD INSIGHT: Bug Reproduction Suite (scripts/repro_bugs.py)
+  PASS = Bug Present / Reproduced | FAIL = Bug Absent / Fixed
+======================================================================
+
+[PASS] B2: roadinsight_readonly cannot SELECT from full views
+       Detail: Permission denied accessing views: (Background on this error at: https://sqlalche.me/e/20/f405)
+
+[PASS] B3: dashboard/app.py::get_engine raises on localhost URLs
+       Detail: get_engine() explicitly raises RuntimeError when localhost or 127.0.0.1 is present
+
+[PASS] B5: ETL loaders lack overarching atomic transaction
+       Detail: ETL main() invokes individual loaders sequentially without an overarching engine.begin() transaction; failures leave partial commits
+
+[PASS] B6: load_road_no_acc positional indexing (iloc[2/4/6]) & unused pct_cols
+       Detail: load_road_no_acc uses positional indexing (row.iloc[2/4/6]) and defines pct_cols without using it
+
+[PASS] B7: ETL silent row skipping and decimal truncation in parse_indian_number
+       Detail: parse_indian_number('12.7') returned 12 (truncated decimal via int(float(s))) and rows with year_val is None are silently skipped
+
+[PASS] B9: Redundant indexes present in road_insight schema
+       Detail: Found 5 redundant indexes still active in schema: ['idx_nat_hist_year', 'idx_nat_ann_year', 'idx_state_stats_state_year', 'idx_city_acc_city_year', 'idx_city_vio_city_year_type']
+
+======================================================================
+SUMMARY OF BUG REPRODUCTION:
+  B2: PASS (Bug Present)
+  B3: PASS (Bug Present)
+  B5: PASS (Bug Present)
+  B6: PASS (Bug Present)
+  B7: PASS (Bug Present)
+  B9: PASS (Bug Present)
+======================================================================
+All suspected bugs successfully verified and reproduced.
+==========================================================================
+  ROAD INSIGHT: Table Row Counts & Relation Sizes Baseline               
+==========================================================================
+Table Name                       Type          Row Count         Size
+--------------------------------------------------------------------------
+cities                           BASE TABLE           50      72.0 KB
+city_accident_stats              BASE TABLE          100     120.0 KB
+city_road_feature_stats          BASE TABLE          400     152.0 KB
+city_violation_stats             BASE TABLE          300     144.0 KB
+city_weather_stats               BASE TABLE          250     144.0 KB
+collision_type_stats             BASE TABLE           18      72.0 KB
+collision_types                  BASE TABLE            9      48.0 KB
+data_sources                     BASE TABLE           10      32.0 KB
+national_annual_stats            BASE TABLE            5      56.0 KB
+national_historical_stats        BASE TABLE           29      56.0 KB
+road_features                    BASE TABLE            8      48.0 KB
+state_annual_stats               BASE TABLE          185     168.0 KB
+states                           BASE TABLE           37      64.0 KB
+stg_large_cities                 BASE TABLE            0      16.0 KB
+stg_large_cities_vio             BASE TABLE            0      16.0 KB
+stg_road_no_acc                  BASE TABLE            0      16.0 KB
+stg_road_state_acc               BASE TABLE            0      16.0 KB
+stg_road_state_killed            BASE TABLE            0      16.0 KB
+violation_type_stats             BASE TABLE           12      72.0 KB
+violation_types                  BASE TABLE            6      48.0 KB
+weather_conditions               BASE TABLE            5      48.0 KB
+--------------------------------------------------------------------------
+Total Base Tables: 21
+Total Rows Stored: 1,424
+==================================================
+  ROAD INSIGHT: Hardware & Environment Baseline   
+==================================================
+Operating System      : Windows 11 (10.0.26200)
+Architecture          : AMD64
+CPU Cores (Logical)   : 12
+CPU Processor         : Intel64 Family 6 Model 186 Stepping 3, GenuineIntel
+System RAM (Total)    : 7.71 GB
+System RAM (Avail)    : 0.71 GB
+Python Version        : 3.13.13
+PostgreSQL Version    : PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit
+PG shared_buffers     : 128MB
+PG max_connections    : 100
