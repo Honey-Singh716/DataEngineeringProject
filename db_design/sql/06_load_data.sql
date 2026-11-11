@@ -5,8 +5,12 @@
 -- Run after: 05_insert_reference_data.sql
 -- 
 -- ARCHITECTURE:
---   Raw CSVs → Python ETL (see 06_etl_loader.py) → stg_* tables
---   → SQL transformations below → core normalized tables
+--   Option A (Recommended & Automated):
+--     Raw CSVs → db_design/06_etl_loader.py (Single-transaction atomic loading,
+--     in-memory unpivoting, rejection logging, and audit tracking)
+--
+--   Option B (Manual Staging Reference):
+--     Raw CSVs → stg_* tables via COPY → SQL transformations below → core tables
 -- =============================================================
 
 SET search_path TO road_insight, public;
