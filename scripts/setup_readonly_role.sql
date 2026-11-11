@@ -13,22 +13,33 @@
 --   5. Enforces a 3-second statement timeout (statement_timeout = '3000ms').
 --
 -- EXECUTION:
--- Run this script as a PostgreSQL superuser in psql or pgAdmin:
---   psql -U postgres -d roadinsight -f scripts/setup_readonly_role.sql
+-- Run this script as a PostgreSQL superuser in psql:
+--   psql -U postgres -d roadinsight -v ro_password="<secure_password>" -f scripts/setup_readonly_role.sql
 -- ============================================================================
 
 \c roadinsight;
+
+-- Validate that ro_password was provided
+\if :{?ro_password}
+\else
+    \echo '========================================================================'
+    \echo 'ERROR: Variable ro_password is not set!'
+    \echo 'Usage: psql -U postgres -d roadinsight -v ro_password="<password>" -f scripts/setup_readonly_role.sql'
+    \echo '========================================================================'
+    \set ON_ERROR_STOP on
+    SELECT 'ro_password parameter is required'::integer;
+\endif
 
 -- 1. Create or update the read-only role
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'roadinsight_readonly') THEN
-        CREATE ROLE roadinsight_readonly WITH LOGIN PASSWORD 'ReadOnlyPass123!Safe';
-    ELSE
-        ALTER ROLE roadinsight_readonly WITH PASSWORD 'ReadOnlyPass123!Safe';
+        CREATE ROLE roadinsight_readonly WITH LOGIN;
     END IF;
 END
 $$;
+
+ALTER ROLE roadinsight_readonly WITH PASSWORD :'ro_password';
 
 -- 2. Revoke any prior broad or inherited privileges
 REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA road_insight FROM roadinsight_readonly;

@@ -1,4 +1,4 @@
-﻿# RoadInsight India 🇮🇳
+# RoadInsight India 🇮🇳
 
 An end-to-end Data Engineering project analyzing road accidents in India from 1970 to 2020. This project demonstrates the complete data lifecycle: extraction, transformation, loading, and visualization.
 

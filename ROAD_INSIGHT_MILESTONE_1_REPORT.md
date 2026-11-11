@@ -242,7 +242,7 @@ To safely connect the engine to the live database without using the superuser `p
    ```
 2. **Update your `.env` file:**
    ```env
-   READONLY_DATABASE_URL=postgresql://roadinsight_readonly:ReadOnlyPass123!Safe@localhost:5432/roadinsight
+   READONLY_DATABASE_URL=postgresql://roadinsight_readonly:<set in .env>@localhost:5432/roadinsight
    ```
 
 Once configured, `run_text_to_sql` will automatically transition from `db_not_configured` to `success` and return live `pandas.DataFrame` data!

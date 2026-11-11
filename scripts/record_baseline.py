@@ -26,10 +26,15 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def get_db_engine():
-    # Prefer DATABASE_URL or admin URL
-    admin_url = os.getenv("DATABASE_URL")
+    # Prefer DATABASE_URL or admin URL from environment variables
+    admin_url = os.getenv("DATABASE_URL") or os.getenv("ADMIN_DATABASE_URL")
     if not admin_url or "readonly" in admin_url:
-        admin_url = "postgresql://postgres:b24cm1030@localhost:5432/roadinsight"
+        pg_user = os.getenv("PGUSER", "postgres")
+        pg_pass = os.getenv("PGPASSWORD", os.getenv("POSTGRES_PASSWORD", ""))
+        pg_host = os.getenv("PGHOST", "localhost")
+        pg_port = os.getenv("PGPORT", "5432")
+        pg_db = os.getenv("PGDATABASE", "roadinsight")
+        admin_url = f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
     return create_engine(admin_url)
 
 
@@ -218,3 +223,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

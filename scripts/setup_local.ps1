@@ -97,7 +97,13 @@ try {
     Write-Host "`n[5/7] Setting up application roles..." -ForegroundColor Yellow
     $roScript = Join-Path $ProjectRoot "scripts\setup_readonly_role.sql"
     if (Test-Path $roScript) {
-        Run-Psql -File $roScript
+        $roPass = $env:READONLY_PASSWORD
+        if ([string]::IsNullOrWhiteSpace($roPass)) {
+            $secRoPass = Read-Host -Prompt "Enter password for roadinsight_readonly role" -AsSecureString
+            $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secRoPass)
+            $roPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+        }
+        Run-Psql -File $roScript -Variables @{ ro_password = $roPass }
     }
 
     Write-Host "`n[6/7] Validating row counts and integrity (07_validation_queries.sql)..." -ForegroundColor Yellow
@@ -113,3 +119,4 @@ catch {
 finally {
     $env:PGPASSWORD = $null
 }
+

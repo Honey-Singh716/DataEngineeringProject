@@ -117,3 +117,4 @@ Evidence file: [`repro_bugs.txt`](./repro_bugs.txt).
 5. **PowerShell Automation:** `scripts/setup_local.ps1` implemented with secure password handling.
 6. **Bug Reproduction Harness:** `scripts/repro_bugs.py` created and executed.
 7. **Baseline Evidence Directory:** Complete baseline evidence generated under `docs/evidence/00_baseline/`.
+

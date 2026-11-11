@@ -7,22 +7,16 @@ env/
 
 # Environment variables and secrets
 .env
-.env.*
+.env*
 !.env.example
+.streamlit/secrets.toml
 
-# Jupyter Notebook
-.ipynb_checkpoints/
+# Database dumps & backups
+*.dump
+*.sql.gz
 
-# IDE settings
-.vscode/
-.idea/
-
-# Operating system files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs
+# Application & ETL Logs
+logs/
 *.log
 
 # Local databases
