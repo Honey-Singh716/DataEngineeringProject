@@ -1,4 +1,4 @@
-﻿# =======================================================================
+# =======================================================================
 # ROAD INSIGHT — Streaming Replication Demonstration Script (PowerShell)
 # File: scripts/replication_demo.ps1
 # Usage:
@@ -61,3 +61,4 @@ catch {
     Write-Host "[ERROR] Replication demo check failed: $_" -ForegroundColor Red
     exit 1
 }
+

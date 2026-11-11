@@ -87,3 +87,4 @@ if __name__ == '__main__':
     print(f"Post-ETL Memory: {res['post_etl_mb']} MB ({res['etl_duration_seconds']}s to process {res['etl_rows_loaded']:,} rows)")
     print(f"Peak Aggregation Memory: {res['post_agg_mb']} MB ({res['agg_duration_seconds']}s to aggregate {res['agg_rows_processed']:,} rows)")
     print(f"Memory Post-GC: {res['post_cleanup_mb']} MB")
+

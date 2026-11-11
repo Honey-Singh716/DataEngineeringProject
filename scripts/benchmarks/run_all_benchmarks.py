@@ -182,3 +182,4 @@ Simulated concurrent query workers:
 
 if __name__ == '__main__':
     run_and_generate_report()
+

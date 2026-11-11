@@ -103,3 +103,4 @@ if __name__ == '__main__':
     print(f"Sequential Scan: {r['seq_scan_ms']} ms ({r['seq_avg_us']} µs/query)")
     print(f"B-Tree Index Scan: {r['btree_scan_ms']} ms ({r['btree_avg_us']} µs/query) — {r['speedup_btree']}x faster")
     print(f"Bitmap Index Scan: {r['bitmap_scan_ms']} ms ({r['bitmap_avg_us']} µs/query) — {r['speedup_bitmap']}x faster")
+

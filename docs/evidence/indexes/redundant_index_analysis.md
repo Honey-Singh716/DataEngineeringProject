@@ -60,3 +60,4 @@ The following indexes are strictly non-redundant and have been preserved:
 - **Write Throughput**: Decreases index maintenance cost during bulk `COPY` / `to_sql` operations in the ETL pipeline.
 - **Buffer Pool Memory**: Saves working memory by preventing duplicate B-tree index pages from occupying the PostgreSQL shared buffers.
 - **Query Plan Regression**: Zero regression. Queries filtering on `state_id`, `city_id`, `collision_type_id`, or `violation_type_id` utilize the composite unique indexes without performance loss.
+

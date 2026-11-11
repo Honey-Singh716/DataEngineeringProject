@@ -39,3 +39,4 @@ This document records manual verification testing conducted across the user inte
 ### Edge Case 3: Prompt Injection via Text-to-SQL
 - **Attack Payload**: `"Show top states; DROP TABLE road_insight.states; --"`
 - **Verification**: Multi-statement detector and AST token parser in `sql_validator.py` detect multiple statements and the forbidden `DROP` keyword, refusing execution before hitting the database.
+

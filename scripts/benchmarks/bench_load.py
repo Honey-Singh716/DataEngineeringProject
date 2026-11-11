@@ -58,3 +58,4 @@ if __name__ == '__main__':
     print("-" * 70)
     for k, v in res.items():
         print(f"{v['concurrency']:<12} | {v['total_tasks']:<8} | {v['total_seconds']:<10} s | {v['requests_per_sec']:<14} | {v['avg_latency_ms']:<16}")
+

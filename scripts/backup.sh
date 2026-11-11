@@ -19,3 +19,4 @@ echo "Starting backup of ${DB} on ${HOST}:${PORT} -> ${BACKUP_FILE}..."
 pg_dump -h "$HOST" -p "$PORT" -U "$USER" -d "$DB" --schema=road_insight --schema=public -Fc -f "$BACKUP_FILE"
 
 echo "Backup completed successfully: ${BACKUP_FILE} ($(du -h "$BACKUP_FILE" | cut -f1))"
+

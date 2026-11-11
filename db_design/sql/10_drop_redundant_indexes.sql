@@ -22,3 +22,4 @@ DROP INDEX IF EXISTS road_insight.idx_city_wea_city_id;      -- Leading prefix o
 DROP INDEX IF EXISTS road_insight.idx_city_rf_city_id;       -- Leading prefix of uq_city_road_feat (city_id, ...)
 DROP INDEX IF EXISTS road_insight.idx_coll_type_id;          -- Leading prefix of uq_coll_type_year (collision_type_id, year)
 DROP INDEX IF EXISTS road_insight.idx_viol_type_id;          -- Leading prefix of uq_viol_type_year (violation_type_id, year)
+

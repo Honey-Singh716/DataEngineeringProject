@@ -102,3 +102,4 @@ if __name__ == '__main__':
         data = r[stage]
         print(f"Stage '{stage}': Mean = {data['mean_ms']} ms | P95 = {data['p95_ms']} ms")
     print(f"Total Measured Pipeline Latency: {r['total_pipeline_ms']} ms")
+

@@ -40,3 +40,4 @@ psql -h "$HOST" -p "$PORT" -U "$USER" -d "$VERIFY_DB" -t -A -F " : " -c "$COUNT_
 echo "Dropping temporary verification database: ${VERIFY_DB}..."
 psql -h "$HOST" -p "$PORT" -U "$USER" -d postgres -c "DROP DATABASE IF EXISTS ${VERIFY_DB};"
 echo "Restore verification completed successfully!"
+

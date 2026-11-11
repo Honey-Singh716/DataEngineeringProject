@@ -1,4 +1,4 @@
-﻿# =======================================================================
+# =======================================================================
 # ROAD INSIGHT — Automated Database Backup Script (PowerShell)
 # File: scripts/backup.ps1
 # Usage:
@@ -74,3 +74,4 @@ catch {
     Write-Host "[ERROR] Backup failed: $_" -ForegroundColor Red
     exit 1
 }
+

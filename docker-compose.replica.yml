@@ -64,3 +64,4 @@ volumes:
 networks:
   roadinsight_net:
     driver: bridge
+

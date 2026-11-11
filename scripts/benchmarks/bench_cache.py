@@ -106,3 +106,4 @@ if __name__ == '__main__':
     print(f"Hit Ratio: {res['hit_ratio_pct']}%")
     print(f"Cache Hit Latency: {res['avg_hit_latency_us']} µs")
     print(f"Cache Miss Latency: {res['avg_miss_latency_us']} µs ({res['speedup_factor']}x speedup)")
+

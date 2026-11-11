@@ -59,3 +59,4 @@ if __name__ == '__main__':
     print("=== Statement Timeout Benchmark ===")
     for s in r:
         print(f"[{s['status']}] {s['scenario']}: Elapsed={s['elapsed_seconds']}s -> {s['detail']}")
+

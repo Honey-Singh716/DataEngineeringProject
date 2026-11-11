@@ -83,3 +83,4 @@ The entire load across all 9 target tables executes within a single database tra
   - Total rows read, loaded, rejected, and null-coerced in `road_insight.etl_run_log`.
   - Exact per-table timings and counts in `road_insight.etl_run_table_log`.
   - Full diagnostic JSON payloads for rejected rows in `road_insight.rejected_rows`.
+

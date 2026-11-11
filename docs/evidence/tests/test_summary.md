@@ -50,3 +50,4 @@ pytest -m "not live"
    - All 14 automated reconciliation and quality checks run in under 0.1 seconds, verifying 0 orphan foreign keys, 0 composite key duplicates, and 100% adherence to temporal bounds.
 4. **Golden Queries Evaluation**:
    - 100% of the 30 golden evaluation queries met expected behavior: 20/20 valid SELECT SQL, 5/5 unsupported queries identified, and 5/5 injection/adversarial attacks thwarted.
+

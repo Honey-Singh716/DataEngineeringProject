@@ -1,4 +1,4 @@
-﻿# =======================================================================
+# =======================================================================
 # ROAD INSIGHT — Backup Restoration & Verification Script (PowerShell)
 # File: scripts/restore_verify.ps1
 # Usage:
@@ -106,3 +106,4 @@ catch {
     Write-Host "[ERROR] Restore verification failed: $_" -ForegroundColor Red
     exit 1
 }
+

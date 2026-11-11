@@ -114,3 +114,4 @@ if __name__ == '__main__':
     print("=== ETL Ingestion Throughput Benchmark ===")
     for k, v in res.items():
         print(f"{v['method']}: {v['rows_per_second']:,} rows/sec ({v['seconds']}s for {v['rows']:,} rows)")
+

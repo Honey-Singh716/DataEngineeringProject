@@ -37,3 +37,4 @@ This document provides mathematical formulations, semantic definitions, underlyi
 
 ### 2.2 Vehicle Registration Inflation
 - `registered_vehicles_thousands` includes all cumulatively registered vehicles in state transport databases (Vahan portal). Because vehicle scrappage was historically under-recorded in India prior to the National Vehicle Scrappage Policy, the registered fleet denominator includes inactive/scrapped vehicles, meaning true per-vehicle accident rates on active vehicles are slightly higher than published figures.
+

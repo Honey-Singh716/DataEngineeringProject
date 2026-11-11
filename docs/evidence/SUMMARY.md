@@ -56,3 +56,4 @@ All phases from **Phase 0 through Phase 10** have been systematically executed, 
 
 1. **PostgreSQL Service Daemon**: The live database and streaming replica require running Docker Desktop or a local PostgreSQL 17 daemon on the host. Local execution instructions are provided in `scripts/setup_local.ps1` and `docs/evidence/NOT_RUN.md`.
 2. **Groq API Rate Limits**: When operating under heavy multi-user loads, LLM API rate limits on Groq free tiers may trigger HTTP 429. The in-memory query cache (`bench_cache.py`) is recommended for production deployment to buffer repetitive user questions.
+
