@@ -1,0 +1,164 @@
+{
+  "run_id": null,
+  "timestamp": "2026-11-11T19:23:47.914787+00:00",
+  "total_checks": 14,
+  "passed": 13,
+  "warns": 1,
+  "fails": 0,
+  "checks": [
+    {
+      "check_id": "R1",
+      "check_name": "State sum vs National annual stats (2019-2023)",
+      "table_name": "state_annual_stats, national_annual_stats",
+      "severity": "WARN",
+      "rows_checked": 5,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "Year 2019: National=456959, StateSum=456959.0, Diff=0.0; Year 2020: National=372181, StateSum=372181.0, Diff=0.0; Year 2021: National=412432, StateSum=412432.0, Diff=0.0; Year 2022: National=461312, StateSum=461312.0, Diff=0.0; Year 2023: National=480583, StateSum=480583.0, Diff=0.0",
+      "checked_at": "2026-11-11T19:23:47.901524+00:00"
+    },
+    {
+      "check_id": "R2",
+      "check_name": "City accident count within State accident threshold",
+      "table_name": "city_accident_stats, state_annual_stats",
+      "severity": "FAIL",
+      "rows_checked": 100,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All 50 cities within state bounds",
+      "checked_at": "2026-11-11T19:23:47.910228+00:00"
+    },
+    {
+      "check_id": "R3",
+      "check_name": "Collision type sum vs National total",
+      "table_name": "collision_type_stats, national_annual_stats",
+      "severity": "FAIL",
+      "rows_checked": 2,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "2022: National=461312, CollisionSum=461312, Diff=0; 2023: National=480583, CollisionSum=480583, Diff=0",
+      "checked_at": "2026-11-11T19:23:47.910527+00:00"
+    },
+    {
+      "check_id": "R4",
+      "check_name": "Violation type sum vs National total",
+      "table_name": "violation_type_stats, national_annual_stats",
+      "severity": "FAIL",
+      "rows_checked": 2,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "2022: National=461312, ViolationSum=461312, Diff=0; 2023: National=480583, ViolationSum=480583, Diff=0",
+      "checked_at": "2026-11-11T19:23:47.910830+00:00"
+    },
+    {
+      "check_id": "R5",
+      "check_name": "Weather condition coverage across all 50 cities",
+      "table_name": "city_weather_stats",
+      "severity": "FAIL",
+      "rows_checked": 250,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "Found 50 cities, total 250 rows (expected 250 rows for 50 cities x 5 weather types)",
+      "checked_at": "2026-11-11T19:23:47.910912+00:00"
+    },
+    {
+      "check_id": "R6",
+      "check_name": "Road feature coverage across all 50 cities",
+      "table_name": "city_road_feature_stats",
+      "severity": "FAIL",
+      "rows_checked": 400,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "Found 50 cities, total 400 rows (expected 400 rows for 50 cities x 8 road features)",
+      "checked_at": "2026-11-11T19:23:47.910961+00:00"
+    },
+    {
+      "check_id": "Q1",
+      "check_name": "Orphan Foreign Key Integrity Check",
+      "table_name": "all fact tables",
+      "severity": "FAIL",
+      "rows_checked": 965,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "0 orphan foreign key records detected across all fact tables",
+      "checked_at": "2026-11-11T19:23:47.911550+00:00"
+    },
+    {
+      "check_id": "Q2",
+      "check_name": "Primary/Natural Key Uniqueness Check",
+      "table_name": "all fact tables",
+      "severity": "FAIL",
+      "rows_checked": 1270,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All composite keys are strictly unique",
+      "checked_at": "2026-11-11T19:23:47.912445+00:00"
+    },
+    {
+      "check_id": "Q3",
+      "check_name": "Out-of-range Values & Rank Boundary Check",
+      "table_name": "city_accident_stats, state_annual_stats",
+      "severity": "FAIL",
+      "rows_checked": 600,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "No negative numbers or out-of-range ranks detected",
+      "checked_at": "2026-11-11T19:23:47.912754+00:00"
+    },
+    {
+      "check_id": "Q4",
+      "check_name": "Mandatory Column Non-Null Check",
+      "table_name": "all fact tables",
+      "severity": "FAIL",
+      "rows_checked": 4755,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All mandatory dimension keys and timestamps are non-null",
+      "checked_at": "2026-11-11T19:23:47.913266+00:00"
+    },
+    {
+      "check_id": "Q5",
+      "check_name": "Aggregate Fatalities vs Accidents Logical Consistency",
+      "table_name": "state_annual_stats",
+      "severity": "WARN",
+      "rows_checked": 185,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "Fatalities <= total accidents across all state-year pairs",
+      "checked_at": "2026-11-11T19:23:47.913425+00:00"
+    },
+    {
+      "check_id": "Q6",
+      "check_name": "Injury Additivity Check (Grievous + Minor == Total)",
+      "table_name": "city_weather_stats, city_road_feature_stats",
+      "severity": "WARN",
+      "rows_checked": 250,
+      "rows_failed": 161,
+      "status": "WARN",
+      "detail": "MoRTH source discrepancy detected: 161 of 250 weather rows exhibit non-additive injury sums. Recorded as known upstream limitation in DATA_QUALITY_RULES.md.",
+      "checked_at": "2026-11-11T19:23:47.913520+00:00"
+    },
+    {
+      "check_id": "Q7",
+      "check_name": "Entity Resolution Canonical Mapping Check",
+      "table_name": "states, cities",
+      "severity": "FAIL",
+      "rows_checked": 87,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All 37 states and 50 cities successfully resolved to canonical database keys",
+      "checked_at": "2026-11-11T19:23:47.913522+00:00"
+    },
+    {
+      "check_id": "Q8",
+      "check_name": "Temporal Validity Year Range Check (1970-2025)",
+      "table_name": "all fact tables",
+      "severity": "FAIL",
+      "rows_checked": 337,
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All temporal timestamps and year integers fall strictly between 1970 and 2025",
+      "checked_at": "2026-11-11T19:23:47.913811+00:00"
+    }
+  ]
+}

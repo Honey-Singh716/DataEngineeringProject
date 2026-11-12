@@ -1,0 +1,96 @@
+{
+  "benchmark": "Text-to-SQL High-Resolution Pipeline Latency Breakdown",
+  "execution_timestamp": "2026-11-11 19:28:31 UTC",
+  "sample_size": 5,
+  "iterations_per_case": 5,
+  "live_groq_measured": false,
+  "llm_dominance_percentage": "UNMEASURED (Groq API offline in sandbox)",
+  "local_measured_statistics_ms": {
+    "mean_ms": 16.573,
+    "median_ms": 9.837,
+    "p95_ms": 35.61
+  },
+  "stage_averages_ms": {
+    "stage_1_input_validation": 0.0003,
+    "stage_2_schema_context": 0.0001,
+    "stage_3_prompt_build": 0.0006,
+    "stage_4_groq_api": "NOT RUN",
+    "stage_5_json_parse": 0.0072,
+    "stage_6_ast_validate": 0.6435,
+    "stage_7_db_execution": 0.237,
+    "stage_8_result_processing": 0.019,
+    "stage_9_chart_render": 15.6656
+  },
+  "cases": [
+    {
+      "case_id": "PIPE-01",
+      "question": "Which top 5 states reported the highest number of accidents in 2023?",
+      "stage_1_input_validation_ms": 0.0005,
+      "stage_2_schema_context_ms": 0.0002,
+      "stage_3_prompt_build_ms": 0.0009,
+      "stage_4_groq_api_ms": "NOT RUN (Offline)",
+      "stage_5_json_parse_ms": 0.01,
+      "stage_6_ast_validate_ms": 1.2486,
+      "stage_7_db_execution_ms": 0.6983,
+      "stage_8_result_processing_ms": 0.0229,
+      "stage_9_chart_render_ms": 39.1705,
+      "total_local_measured_overhead_ms": 41.1516
+    },
+    {
+      "case_id": "PIPE-02",
+      "question": "Show national road accident totals from 2019 to 2023.",
+      "stage_1_input_validation_ms": 0.0003,
+      "stage_2_schema_context_ms": 0.0001,
+      "stage_3_prompt_build_ms": 0.0006,
+      "stage_4_groq_api_ms": "NOT RUN (Offline)",
+      "stage_5_json_parse_ms": 0.0067,
+      "stage_6_ast_validate_ms": 0.3835,
+      "stage_7_db_execution_ms": 0.1306,
+      "stage_8_result_processing_ms": 0.0167,
+      "stage_9_chart_render_ms": 9.2987,
+      "total_local_measured_overhead_ms": 9.8372
+    },
+    {
+      "case_id": "PIPE-03",
+      "question": "Which violation types caused the most accidents in 2023?",
+      "stage_1_input_validation_ms": 0.0003,
+      "stage_2_schema_context_ms": 0.0001,
+      "stage_3_prompt_build_ms": 0.0005,
+      "stage_4_groq_api_ms": "NOT RUN (Offline)",
+      "stage_5_json_parse_ms": 0.006,
+      "stage_6_ast_validate_ms": 0.4572,
+      "stage_7_db_execution_ms": 0.1152,
+      "stage_8_result_processing_ms": 0.0184,
+      "stage_9_chart_render_ms": 12.8454,
+      "total_local_measured_overhead_ms": 13.443
+    },
+    {
+      "case_id": "PIPE-04",
+      "question": "What is the severity rate for top 5 large cities in 2019?",
+      "stage_1_input_validation_ms": 0.0003,
+      "stage_2_schema_context_ms": 0.0001,
+      "stage_3_prompt_build_ms": 0.0006,
+      "stage_4_groq_api_ms": "NOT RUN (Offline)",
+      "stage_5_json_parse_ms": 0.007,
+      "stage_6_ast_validate_ms": 0.4839,
+      "stage_7_db_execution_ms": 0.1274,
+      "stage_8_result_processing_ms": 0.0186,
+      "stage_9_chart_render_ms": 9.156,
+      "total_local_measured_overhead_ms": 9.7939
+    },
+    {
+      "case_id": "PIPE-05",
+      "question": "Compare accidents in foggy weather vs rainy weather across cities.",
+      "stage_1_input_validation_ms": 0.0003,
+      "stage_2_schema_context_ms": 0.0001,
+      "stage_3_prompt_build_ms": 0.0005,
+      "stage_4_groq_api_ms": "NOT RUN (Offline)",
+      "stage_5_json_parse_ms": 0.0063,
+      "stage_6_ast_validate_ms": 0.6442,
+      "stage_7_db_execution_ms": 0.1135,
+      "stage_8_result_processing_ms": 0.0183,
+      "stage_9_chart_render_ms": 7.8572,
+      "total_local_measured_overhead_ms": 8.6404
+    }
+  ]
+}

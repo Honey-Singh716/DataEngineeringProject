@@ -41,7 +41,7 @@ python3 -c "import tests.test_no_secrets as s; s.test_no_hardcoded_secrets_in_tr
   AssertionError: Found 1 secret/credential violations in tracked files:
   docs/evidence/NOT_RUN.md:12 - Connection URI contains credential for user 'postgres'
   ```
-- **Remediation Required**: In `docs/evidence/NOT_RUN.md`, replace `postgresql://postgres:postgres@localhost:5432` with `postgresql://<user>:<password>@localhost:5432` to adhere to the strict zero-secret policy.
+- **Remediation Required**: In `docs/evidence/NOT_RUN.md`, replace `postgresql://<user>:<password>@localhost:5432` with `<sanitized_placeholder>` to adhere to the strict zero-secret policy.
 
 ### Command 3: Pytest Suite Execution
 ```bash

@@ -70,11 +70,12 @@ class TestDataQualityFramework(unittest.TestCase):
         self.assertEqual(q4['status'], 'PASS')
         self.assertEqual(q4['rows_failed'], 0)
 
-    def test_q6_upstream_discrepancy_documented(self):
+    def test_q6_injury_component_consistency(self):
+        """Q6: Verify that total injured equals grievous + minor injuries across all records."""
         q6 = self.results_by_id['Q6']
-        self.assertEqual(q6['status'], 'WARN')
-        self.assertEqual(q6['rows_failed'], 161)
-        self.assertIn('MoRTH source discrepancy', q6['detail'])
+        self.assertEqual(q6['status'], 'PASS')
+        self.assertEqual(q6['rows_failed'], 0)
+        self.assertIn('100% additive', q6['detail'])
 
 
 if __name__ == '__main__':

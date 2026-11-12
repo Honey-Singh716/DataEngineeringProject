@@ -1,9 +1,9 @@
 {
   "run_id": null,
-  "timestamp": "2026-11-11T17:43:26.790663+00:00",
+  "timestamp": "2026-11-11T19:25:19.314090+00:00",
   "total_checks": 14,
-  "passed": 13,
-  "warns": 1,
+  "passed": 14,
+  "warns": 0,
   "fails": 0,
   "checks": [
     {
@@ -15,7 +15,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "Year 2019: National=456959, StateSum=456959.0, Diff=0.0; Year 2020: National=372181, StateSum=372181.0, Diff=0.0; Year 2021: National=412432, StateSum=412432.0, Diff=0.0; Year 2022: National=461312, StateSum=461312.0, Diff=0.0; Year 2023: National=480583, StateSum=480583.0, Diff=0.0",
-      "checked_at": "2026-11-11T17:43:26.777214+00:00"
+      "checked_at": "2026-11-11T19:25:19.302487+00:00"
     },
     {
       "check_id": "R2",
@@ -26,7 +26,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "All 50 cities within state bounds",
-      "checked_at": "2026-11-11T17:43:26.786337+00:00"
+      "checked_at": "2026-11-11T19:25:19.310567+00:00"
     },
     {
       "check_id": "R3",
@@ -37,7 +37,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "2022: National=461312, CollisionSum=461312, Diff=0; 2023: National=480583, CollisionSum=480583, Diff=0",
-      "checked_at": "2026-11-11T17:43:26.786645+00:00"
+      "checked_at": "2026-11-11T19:25:19.310847+00:00"
     },
     {
       "check_id": "R4",
@@ -48,7 +48,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "2022: National=461312, ViolationSum=461312, Diff=0; 2023: National=480583, ViolationSum=480583, Diff=0",
-      "checked_at": "2026-11-11T17:43:26.786925+00:00"
+      "checked_at": "2026-11-11T19:25:19.311121+00:00"
     },
     {
       "check_id": "R5",
@@ -59,7 +59,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "Found 50 cities, total 250 rows (expected 250 rows for 50 cities x 5 weather types)",
-      "checked_at": "2026-11-11T17:43:26.786982+00:00"
+      "checked_at": "2026-11-11T19:25:19.311167+00:00"
     },
     {
       "check_id": "R6",
@@ -70,7 +70,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "Found 50 cities, total 400 rows (expected 400 rows for 50 cities x 8 road features)",
-      "checked_at": "2026-11-11T17:43:26.787027+00:00"
+      "checked_at": "2026-11-11T19:25:19.311207+00:00"
     },
     {
       "check_id": "Q1",
@@ -81,7 +81,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "0 orphan foreign key records detected across all fact tables",
-      "checked_at": "2026-11-11T17:43:26.787522+00:00"
+      "checked_at": "2026-11-11T19:25:19.311703+00:00"
     },
     {
       "check_id": "Q2",
@@ -92,7 +92,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "All composite keys are strictly unique",
-      "checked_at": "2026-11-11T17:43:26.788287+00:00"
+      "checked_at": "2026-11-11T19:25:19.312392+00:00"
     },
     {
       "check_id": "Q3",
@@ -103,7 +103,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "No negative numbers or out-of-range ranks detected",
-      "checked_at": "2026-11-11T17:43:26.788568+00:00"
+      "checked_at": "2026-11-11T19:25:19.312670+00:00"
     },
     {
       "check_id": "Q4",
@@ -114,7 +114,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "All mandatory dimension keys and timestamps are non-null",
-      "checked_at": "2026-11-11T17:43:26.789052+00:00"
+      "checked_at": "2026-11-11T19:25:19.313143+00:00"
     },
     {
       "check_id": "Q5",
@@ -125,7 +125,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "Fatalities <= total accidents across all state-year pairs",
-      "checked_at": "2026-11-11T17:43:26.789189+00:00"
+      "checked_at": "2026-11-11T19:25:19.313289+00:00"
     },
     {
       "check_id": "Q6",
@@ -133,10 +133,10 @@
       "table_name": "city_weather_stats, city_road_feature_stats",
       "severity": "WARN",
       "rows_checked": 250,
-      "rows_failed": 161,
-      "status": "WARN",
-      "detail": "MoRTH source discrepancy detected: 161 of 250 weather rows exhibit non-additive injury sums. Recorded as known upstream limitation in DATA_QUALITY_RULES.md.",
-      "checked_at": "2026-11-11T17:43:26.789273+00:00"
+      "rows_failed": 0,
+      "status": "PASS",
+      "detail": "All 250 city weather rows exhibit 100% additive injury sums (Grievous + Minor == Total).",
+      "checked_at": "2026-11-11T19:25:19.313372+00:00"
     },
     {
       "check_id": "Q7",
@@ -147,7 +147,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "All 37 states and 50 cities successfully resolved to canonical database keys",
-      "checked_at": "2026-11-11T17:43:26.789275+00:00"
+      "checked_at": "2026-11-11T19:25:19.313375+00:00"
     },
     {
       "check_id": "Q8",
@@ -158,7 +158,7 @@
       "rows_failed": 0,
       "status": "PASS",
       "detail": "All temporal timestamps and year integers fall strictly between 1970 and 2025",
-      "checked_at": "2026-11-11T17:43:26.789557+00:00"
+      "checked_at": "2026-11-11T19:25:19.313664+00:00"
     }
   ]
 }

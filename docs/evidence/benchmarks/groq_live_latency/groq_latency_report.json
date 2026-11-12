@@ -1,0 +1,18 @@
+{
+  "benchmark": "Groq Live API Latency Benchmark",
+  "execution_status": "NOT RUN",
+  "execution_timestamp": "2026-11-11 19:27:12 UTC",
+  "reason": "GROQ_API_KEY environment variable is not configured. Outbound network access is also disabled in standard sandbox mode.",
+  "policy_adherence": "Strict zero-fabrication policy: No synthetic or simulated sleep latencies are substituted for live API measurements.",
+  "test_environment": {
+    "os": "darwin",
+    "python_version": "3.13.1",
+    "groq_sdk_available": true
+  },
+  "reproduction_instructions": [
+    "1. Obtain a valid Groq API key from https://console.groq.com",
+    "2. Export the key: export GROQ_API_KEY='gsk_...'",
+    "3. Ensure internet connectivity to api.groq.com:443",
+    "4. Run: python scripts/benchmarks/bench_groq_live_latency.py"
+  ]
+}

@@ -88,6 +88,19 @@ class TestETLDryRun(unittest.TestCase):
                              f"Count mismatch in {table_name}: got {table_counts[table_name]}, expected {expected}")
 
 
+class TestETLWhitespaceNormalization(unittest.TestCase):
+    """Regression test: verify trailing whitespace in column names (such as Annexure 45) is stripped."""
+
+    def test_annexure45_column_whitespace_stripped(self):
+        tracker = etl.ETLTracker()
+        df = etl.load_city_weather_stats(conn=None, tracker=tracker)
+        # In RA2019_A45.csv, total injured had trailing whitespace in the header
+        # With fix, persons_total_injured must equal persons_grievously_injured + persons_minor_injured for all 250 rows
+        mismatch = (df['persons_grievously_injured'] + df['persons_minor_injured']) != df['persons_total_injured']
+        self.assertEqual(mismatch.sum(), 0, f"Found {mismatch.sum()} rows where Grievous + Minor != Total!")
+        self.assertGreater(df['persons_total_injured'].sum(), 0, "Total injuries should not be all 0!")
+
+
 class TestETLAtomicRollback(unittest.TestCase):
     """Test error handling and atomicity during failure."""
 

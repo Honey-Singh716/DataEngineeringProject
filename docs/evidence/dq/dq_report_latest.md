@@ -1,8 +1,8 @@
 # RoadInsight India — Data Quality & Reconciliation Audit Report
 
-**Generated:** 2026-11-11 17:43:26 UTC  
+**Generated:** 2026-11-11 19:25:19 UTC  
 **Run ID:** `In-Memory / Dry-Run`  
-**Total Checks:** 14 | **Passed:** 13 | **Warnings:** 1 | **Failures:** 0
+**Total Checks:** 14 | **Passed:** 14 | **Warnings:** 0 | **Failures:** 0
 
 ---
 
@@ -10,8 +10,8 @@
 
 | Status | Count | Description |
 |---|---|---|
-| :white_check_mark: PASS | 13 | Full mathematical reconciliation and constraint adherence |
-| :warning: WARN | 1 | Documented upstream source dataset anomalies (MoRTH Annexure 45) |
+| :white_check_mark: PASS | 14 | Full mathematical reconciliation and constraint adherence |
+| :warning: WARN | 0 | Documented upstream source dataset anomalies (MoRTH Annexure 45) |
 | :x: FAIL | 0 | Critical data integrity or schema constraint failures |
 
 ---
@@ -31,7 +31,7 @@
 | **Q3** | Out-of-range Values & Rank Boundary Check | `city_accident_stats, state_annual_stats` | FAIL | 600 | 0 | :white_check_mark: PASS | No negative numbers or out-of-range ranks detected |
 | **Q4** | Mandatory Column Non-Null Check | `all fact tables` | FAIL | 4,755 | 0 | :white_check_mark: PASS | All mandatory dimension keys and timestamps are non-null |
 | **Q5** | Aggregate Fatalities vs Accidents Logical Consistency | `state_annual_stats` | WARN | 185 | 0 | :white_check_mark: PASS | Fatalities <= total accidents across all state-year pairs |
-| **Q6** | Injury Additivity Check (Grievous + Minor == Total) | `city_weather_stats, city_road_feature_stats` | WARN | 250 | 161 | :warning: WARN | MoRTH source discrepancy detected: 161 of 250 weather rows exhibit non-additive injury sums. Recorded as known upstream limitation in DATA_QUALITY_RULES.md. |
+| **Q6** | Injury Additivity Check (Grievous + Minor == Total) | `city_weather_stats, city_road_feature_stats` | WARN | 250 | 0 | :white_check_mark: PASS | All 250 city weather rows exhibit 100% additive injury sums (Grievous + Minor == Total). |
 | **Q7** | Entity Resolution Canonical Mapping Check | `states, cities` | FAIL | 87 | 0 | :white_check_mark: PASS | All 37 states and 50 cities successfully resolved to canonical database keys |
 | **Q8** | Temporal Validity Year Range Check (1970-2025) | `all fact tables` | FAIL | 337 | 0 | :white_check_mark: PASS | All temporal timestamps and year integers fall strictly between 1970 and 2025 |
 

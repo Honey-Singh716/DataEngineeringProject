@@ -1,0 +1,113 @@
+{
+  "test_execution": {
+    "framework": "pytest",
+    "version": "9.2.0",
+    "python_version": "3.13.1",
+    "execution_timestamp": "2026-11-12T00:58:48Z",
+    "duration_seconds": 2.08,
+    "summary": {
+      "total_collected": 54,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 9,
+      "errors": 0
+    },
+    "suites": [
+      {
+        "file": "tests/test_backend.py",
+        "collected": 21,
+        "passed": 21,
+        "failed": 0,
+        "skipped": 0,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_dashboard_sql.py",
+        "collected": 2,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 1,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_data_quality.py",
+        "collected": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_etl.py",
+        "collected": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_golden_accuracy.py",
+        "collected": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_milestone2.py",
+        "collected": 13,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 8,
+        "status": "PASS"
+      },
+      {
+        "file": "tests/test_no_secrets.py",
+        "collected": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "status": "PASS"
+      }
+    ],
+    "skipped_tests_analysis": [
+      {
+        "test": "tests/test_dashboard_sql.py::test_dashboard_queries_executable_under_dashboard_role",
+        "reason": "DASHBOARD_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_role_identity",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_transaction_read_only",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_select_approved_tables",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_select_approved_7_views",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_staging_tables_denied",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_data_sources_denied",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_db_dml_statements_denied",
+        "reason": "READONLY_DATABASE_URL is not set or unreachable"
+      },
+      {
+        "test": "tests/test_milestone2.py::test_live_text_to_sql_execution",
+        "reason": "GROQ_API_KEY is not set"
+      }
+    ]
+  }
+}
+

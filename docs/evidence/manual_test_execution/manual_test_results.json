@@ -1,0 +1,31 @@
+{
+  "manual_test_execution": {
+    "execution_date": "2026-11-12",
+    "total_protocols": 16,
+    "summary": {
+      "passed": 12,
+      "blocked": 4,
+      "failed": 0,
+      "not_run": 0
+    },
+    "protocols": [
+      {"id": "MTR-01", "name": "Dashboard Overview", "status": "BLOCKED", "reason": "PostgreSQL daemon port 5432 closed"},
+      {"id": "MTR-02", "name": "State Filtering", "status": "BLOCKED", "reason": "PostgreSQL daemon port 5432 closed"},
+      {"id": "MTR-03", "name": "City Ranking View", "status": "BLOCKED", "reason": "PostgreSQL daemon port 5432 closed"},
+      {"id": "MTR-04", "name": "Text-to-SQL Supported", "status": "BLOCKED", "reason": "GROQ_API_KEY not configured / network offline"},
+      {"id": "MTR-05", "name": "Text-to-SQL Unsupported", "status": "PASS", "evidence": "tests/test_backend.py:test_unsupported_question_handling"},
+      {"id": "MTR-06", "name": "Prompt Injection Resistance", "status": "PASS", "evidence": "tests/test_backend.py:test_drop_rejected"},
+      {"id": "MTR-07", "name": "SQL Injection Resistance", "status": "PASS", "evidence": "tests/test_backend.py:test_unauthorized_table_rejected"},
+      {"id": "MTR-08", "name": "Empty Query Result", "status": "PASS", "evidence": "tests/test_backend.py:test_empty_query_results_handled"},
+      {"id": "MTR-09", "name": "Groq API Outage Simulation", "status": "PASS", "evidence": "tests/test_milestone2.py:test_live_text_to_sql_execution"},
+      {"id": "MTR-10", "name": "Database Outage Simulation", "status": "PASS", "evidence": "tests/test_backend.py:test_database_connection_failure_handled"},
+      {"id": "MTR-11", "name": "ETL Idempotency", "status": "PASS", "evidence": "tests/test_etl.py:test_dry_run_full_pipeline"},
+      {"id": "MTR-12", "name": "ETL Atomic Rollback", "status": "PASS", "evidence": "tests/test_etl.py:test_atomic_rollback_on_loader_error"},
+      {"id": "MTR-13", "name": "ETL Decimal Rejection", "status": "PASS", "evidence": "tests/test_etl.py:test_non_integer_rejection"},
+      {"id": "MTR-14", "name": "Readonly Role Security", "status": "PASS", "evidence": "tests/test_backend.py:test_readonly_transaction_enforcement_event"},
+      {"id": "MTR-15", "name": "Automated Data Quality Run", "status": "PASS", "evidence": "docs/evidence/dq/dq_report_latest.md"},
+      {"id": "MTR-16", "name": "Query Result Caching", "status": "PASS", "evidence": "scripts/benchmarks/bench_cache.py"}
+    ]
+  }
+}
+

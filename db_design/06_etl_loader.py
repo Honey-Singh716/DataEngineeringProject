@@ -628,7 +628,10 @@ def load_city_weather_stats(conn, tracker: ETLTracker) -> pd.DataFrame:
     df_raw = pd.read_csv(DATASETS_DIR / source_file)
     tracker.increment_read(len(df_raw))
 
-    df = df_raw[df_raw['States/UTs'].notna() & (df_raw['States/UTs'].astype(str).str.strip() != 'Total')].copy()
+    # Strip column whitespace and collapse multiple spaces (consistent with other loaders)
+    df = df_raw.copy()
+    df.columns = [re.sub(r'\s+', ' ', c).strip() for c in df.columns]
+    df = df[df['States/UTs'].notna() & (df['States/UTs'].astype(str).str.strip() != 'Total')].copy()
     df['States/UTs'] = df['States/UTs'].apply(normalize_city_name)
 
     weather_col_map = {

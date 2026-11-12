@@ -120,8 +120,8 @@ class TestGoldenQueriesAccuracy(unittest.TestCase):
             if cat == 'supported':
                 if SQLGLOT_AVAILABLE:
                     val_res = validate_sql(ref_sql)
-                    syntax_valid = val_res.is_valid
-                    notes = val_res.error or "AST and Schema validation passed"
+                    syntax_valid = val_res.ok if hasattr(val_res, 'ok') else getattr(val_res, 'is_valid', False)
+                    notes = val_res.error_message if hasattr(val_res, 'error_message') else (getattr(val_res, 'error', '') or "AST and Schema validation passed")
                 else:
                     syntax_valid, notes = basic_validate_sql(ref_sql)
 

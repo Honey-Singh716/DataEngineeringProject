@@ -1,24 +1,24 @@
 id,category,question,expected_behavior,actual_status,syntax_valid,evaluation_mode,notes
-GQ-01,supported,What is the total number of road accidents and fatalities in India in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-02,supported,Which top 5 states had the highest number of accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-03,supported,Which top 5 cities reported the highest number of fatalities in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-04,supported,Show the national trend of road accidents and fatalities between 2019 and 2023.,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-05,supported,What are the top 3 traffic violation causes by total accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-06,supported,Which collision type caused the highest number of fatalities in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-07,supported,Compare road accidents in Maharashtra and Tamil Nadu from 2019 to 2023.,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-08,supported,How many accidents occurred in Delhi in 2022 and 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-09,supported,What was the total number of accidents under rainy weather across all cities in 2019?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-10,supported,Which road feature had the highest number of accidents across cities in 2019?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-11,supported,What is the fatality rate per lakh population historically from 1970 to 2019?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-12,supported,Show accident count and fatality rank for Uttar Pradesh in 2023.,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-13,supported,What was the total number of overspeeding violations in 2022 compared to 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-14,supported,Which city had the lowest number of accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-15,supported,How many hit-and-run fatalities were recorded nationally in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-16,supported,List all weather conditions tracked in the system.,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-17,supported,List all 8 road features tracked in the system.,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-18,supported,What is the total number of persons injured nationally in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-19,supported,What percentage did accidents change by nationally in 2020 due to COVID lockdown?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
-GQ-20,supported,What are the total accidents in Bengaluru by violation type?,EXECUTE,EXECUTE,YES,Static/Reference,Valid SQL query
+GQ-01,supported,What is the total number of road accidents and fatalities in India in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-02,supported,Which top 5 states had the highest number of accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-03,supported,Which top 5 cities reported the highest number of fatalities in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-04,supported,Show the national trend of road accidents and fatalities between 2019 and 2023.,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-05,supported,What are the top 3 traffic violation causes by total accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-06,supported,Which collision type caused the highest number of fatalities in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-07,supported,Compare road accidents in Maharashtra and Tamil Nadu from 2019 to 2023.,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-08,supported,How many accidents occurred in Delhi in 2022 and 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-09,supported,What was the total number of accidents under rainy weather across all cities in 2019?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-10,supported,Which road feature had the highest number of accidents across cities in 2019?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-11,supported,What is the fatality rate per lakh population historically from 1970 to 2019?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-12,supported,Show accident count and fatality rank for Uttar Pradesh in 2023.,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-13,supported,What was the total number of overspeeding violations in 2022 compared to 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-14,supported,Which city had the lowest number of accidents in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-15,supported,How many hit-and-run fatalities were recorded nationally in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-16,supported,List all weather conditions tracked in the system.,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-17,supported,List all 8 road features tracked in the system.,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-18,supported,What is the total number of persons injured nationally in 2023?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-19,supported,What percentage did accidents change by nationally in 2020 due to COVID lockdown?,EXECUTE,EXECUTE,YES,Static/Reference,
+GQ-20,supported,What are the total accidents in Bengaluru by violation type?,EXECUTE,EXECUTE,YES,Static/Reference,
 GQ-21,unsupported,Show accident statistics broken down by driver age group and gender.,REJECT_UNSUPPORTED,REJECT_UNSUPPORTED,N/A,Static/Reference,Correctly identified as out-of-scope schema domain
 GQ-22,unsupported,Which vehicle make and model (e.g. Maruti Swift vs Hyundai i20) had the most crashes in 2023?,REJECT_UNSUPPORTED,REJECT_UNSUPPORTED,N/A,Static/Reference,Correctly identified as out-of-scope schema domain
 GQ-23,unsupported,Provide exact GPS coordinates (latitude/longitude) of all fatal accidents in Mumbai.,REJECT_UNSUPPORTED,REJECT_UNSUPPORTED,N/A,Static/Reference,Correctly identified as out-of-scope schema domain

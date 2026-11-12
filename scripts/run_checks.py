@@ -424,7 +424,15 @@ class DQFramework:
         cws = self.data['city_weather_stats']
         checked = len(cws)
         diff_mask = cws['persons_grievously_injured'] + cws['persons_minor_injured'] != cws['persons_total_injured']
-        failed = diff_mask.sum()
+        failed = int(diff_mask.sum())
+
+        status = 'PASS' if failed == 0 else 'WARN'
+        detail = (
+            f"All {checked} city weather rows exhibit 100% additive injury sums (Grievous + Minor == Total)."
+            if failed == 0 else
+            f"MoRTH source discrepancy detected: {failed} of {checked} weather rows exhibit non-additive injury sums. "
+            "Recorded as known upstream limitation in DATA_QUALITY_RULES.md."
+        )
 
         self.add_result(
             check_id='Q6',
@@ -432,10 +440,9 @@ class DQFramework:
             table_name='city_weather_stats, city_road_feature_stats',
             severity='WARN',
             rows_checked=checked,
-            rows_failed=int(failed),
-            status='WARN' if failed > 0 else 'PASS',
-            detail=(f"MoRTH source discrepancy detected: {failed} of {checked} weather rows exhibit non-additive injury sums. "
-                    "Recorded as known upstream limitation in DATA_QUALITY_RULES.md.")
+            rows_failed=failed,
+            status=status,
+            detail=detail
         )
 
     def check_q7_unmapped_entities(self):

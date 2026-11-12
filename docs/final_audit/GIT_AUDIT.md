@@ -115,11 +115,11 @@ A diff between `main` (`faa8144`) and `feature/hardening` (`081da41`) shows:
 Executed automated secret scanning across all git-tracked files via `tests/test_no_secrets.py`:
 - **Files Scanned**: 128 tracked text/code files.
 - **Patterns Checked**:
-  - `PASSWORD '...'` literals
+  - `PASSWORD '<password>'` literals
   - `postgresql://user:password@host` connection strings
   - `gsk_` Groq API key patterns
   - `sk-` OpenAI API key patterns
-  - Known leaked credentials (`ReadOnlyPass123`, `b24cm1030`)
+  - Known leaked credentials (`ReadOnlyPass***`, `b24cm***`)
 - **Violations Detected**: **0**
 - **Audit Conclusion**: **PASS**. The repository contains zero hardcoded credentials in tracked files on `feature/hardening`.
 

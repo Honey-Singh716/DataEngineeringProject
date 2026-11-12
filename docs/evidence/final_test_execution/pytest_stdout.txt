@@ -1,0 +1,72 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.1, pytest-9.2.0, pluggy-1.7.0 -- /Users/jayantsoni/Desktop/RoadInsight_India/DataEngineeringProject/.venv/bin/python3.13
+cachedir: .pytest_cache
+rootdir: /Users/jayantsoni/Desktop/RoadInsight_India/DataEngineeringProject
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-7.1.0, anyio-4.16.0
+collecting ... collected 54 items
+
+tests/test_backend.py::test_groq_response_parsing_valid PASSED           [  1%]
+tests/test_backend.py::test_successful_sql_generation PASSED             [  3%]
+tests/test_backend.py::test_unsupported_question_handling PASSED         [  5%]
+tests/test_backend.py::test_invalid_json_response_handling PASSED        [  7%]
+tests/test_backend.py::test_multiple_sql_statements_rejected PASSED      [  9%]
+tests/test_backend.py::test_insert_rejected PASSED                       [ 11%]
+tests/test_backend.py::test_delete_rejected PASSED                       [ 12%]
+tests/test_backend.py::test_drop_rejected PASSED                         [ 14%]
+tests/test_backend.py::test_unauthorized_table_rejected PASSED           [ 16%]
+tests/test_backend.py::test_staging_table_rejected PASSED                [ 18%]
+tests/test_backend.py::test_unauthorized_schema_rejected PASSED          [ 20%]
+tests/test_backend.py::test_dangerous_function_rejected PASSED           [ 22%]
+tests/test_backend.py::test_valid_cte_allowed PASSED                     [ 24%]
+tests/test_backend.py::test_data_modifying_cte_rejected PASSED           [ 25%]
+tests/test_backend.py::test_subquery_with_unauthorized_table_rejected PASSED [ 27%]
+tests/test_backend.py::test_missing_limit_enforced PASSED                [ 29%]
+tests/test_backend.py::test_empty_query_results_handled PASSED           [ 31%]
+tests/test_backend.py::test_database_connection_failure_handled PASSED   [ 33%]
+tests/test_backend.py::test_query_timeout_handled PASSED                 [ 35%]
+tests/test_backend.py::test_readonly_transaction_enforcement_event PASSED [ 37%]
+tests/test_backend.py::test_complete_text_to_sql_workflow PASSED         [ 38%]
+tests/test_dashboard_sql.py::test_no_string_interpolation_in_dashboard_sql PASSED [ 40%]
+tests/test_dashboard_sql.py::test_dashboard_queries_executable_under_dashboard_role SKIPPED [ 42%]
+tests/test_data_quality.py::TestDataQualityFramework::test_all_14_checks_executed PASSED [ 44%]
+tests/test_data_quality.py::TestDataQualityFramework::test_q1_referential_integrity PASSED [ 46%]
+tests/test_data_quality.py::TestDataQualityFramework::test_q2_duplicate_uniqueness PASSED [ 48%]
+tests/test_data_quality.py::TestDataQualityFramework::test_q4_mandatory_non_null PASSED [ 50%]
+tests/test_data_quality.py::TestDataQualityFramework::test_q6_injury_component_consistency PASSED [ 51%]
+tests/test_data_quality.py::TestDataQualityFramework::test_r1_reconciliation PASSED [ 53%]
+tests/test_data_quality.py::TestDataQualityFramework::test_r3_r4_totals PASSED [ 55%]
+tests/test_etl.py::TestETLNumberParsing::test_non_integer_rejection PASSED [ 57%]
+tests/test_etl.py::TestETLNumberParsing::test_null_coercion PASSED       [ 59%]
+tests/test_etl.py::TestETLNumberParsing::test_valid_indian_numbers PASSED [ 61%]
+tests/test_etl.py::TestETLNormalization::test_city_normalization PASSED  [ 62%]
+tests/test_etl.py::TestETLNormalization::test_state_normalization PASSED [ 64%]
+tests/test_etl.py::TestETLDryRun::test_dry_run_full_pipeline PASSED      [ 66%]
+tests/test_etl.py::TestETLWhitespaceNormalization::test_annexure45_column_whitespace_stripped PASSED [ 68%]
+tests/test_etl.py::TestETLAtomicRollback::test_atomic_rollback_on_loader_error PASSED [ 70%]
+tests/test_golden_accuracy.py::TestGoldenQueriesAccuracy::test_all_30_queries_present PASSED [ 72%]
+tests/test_golden_accuracy.py::TestGoldenQueriesAccuracy::test_golden_queries_evaluation PASSED [ 74%]
+tests/test_milestone2.py::test_db_role_identity SKIPPED (READONLY_DA...) [ 75%]
+tests/test_milestone2.py::test_db_transaction_read_only SKIPPED (REA...) [ 77%]
+tests/test_milestone2.py::test_db_select_approved_tables SKIPPED (RE...) [ 79%]
+tests/test_milestone2.py::test_db_select_approved_7_views SKIPPED (R...) [ 81%]
+tests/test_milestone2.py::test_db_staging_tables_denied SKIPPED (REA...) [ 83%]
+tests/test_milestone2.py::test_db_data_sources_denied SKIPPED (READO...) [ 85%]
+tests/test_milestone2.py::test_db_dml_statements_denied SKIPPED (REA...) [ 87%]
+tests/test_milestone2.py::test_chart_generator_bar PASSED                [ 88%]
+tests/test_milestone2.py::test_chart_generator_line PASSED               [ 90%]
+tests/test_milestone2.py::test_chart_generator_pie PASSED                [ 92%]
+tests/test_milestone2.py::test_chart_generator_empty_or_single_column PASSED [ 94%]
+tests/test_milestone2.py::test_suggested_questions_validity PASSED       [ 96%]
+tests/test_milestone2.py::test_live_text_to_sql_execution SKIPPED (G...) [ 98%]
+tests/test_no_secrets.py::test_no_hardcoded_secrets_in_tracked_files PASSED [100%]
+
+=============================== warnings summary ===============================
+ai_analyst/config.py:95
+  /Users/jayantsoni/Desktop/RoadInsight_India/DataEngineeringProject/ai_analyst/config.py:95: UserWarning: GROQ_API_KEY is not set. SQL generation will fail. Copy .env.example to .env and fill in the value.
+    return Settings()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /Users/jayantsoni/Desktop/RoadInsight_India/DataEngineeringProject/docs/evidence/final_test_execution/junit_report.xml -
+=================== 45 passed, 9 skipped, 1 warning in 2.08s ===================
